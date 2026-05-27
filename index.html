@@ -2,674 +2,1148 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Retail Intelligence Dashboard</title>
+<title>Datum Wiki · Retail Intelligence</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- GOOGLE FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Questrial&display=swap" rel="stylesheet">
+
 <style>
+
+/* =============================
+   YOUR DATUM STYLE (SIMPLIFIED CORE)
+   ============================= */
+
 body {
-    font-family: Arial;
-    background: #0b1220;
-    color: white;
+    background: #fafaf7;
+    font-family: Questrial, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 32px 40px;
+    color: #0f172a;
 }
 
-.header {
-    font-size: 32px;
-    font-weight: bold;
+.masthead {
+    background: #1e1b4b;
+    color: white;
+    padding: 14px 20px;
+    border-bottom: 4px solid #fbbf24;
+    font-family: DM Serif Display, serif;
 }
 
-.sub {
-    color: #94a3b8;
-    margin-bottom: 10px;
+.byline {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #64748b;
+    margin: 12px 0;
 }
 
-.topbar {
-    display: flex;
-    gap: 10px;
-    margin: 15px 0;
-    flex-wrap: wrap;
+.kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #e7e5dd;
+    margin-bottom: 20px;
 }
 
-input, select {
-    padding: 8px;
-    border-radius: 6px;
-    border: none;
-}
-
-.list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.card {
-    background: #111c33;
+.kpi {
+    background: white;
     padding: 14px;
-    border-radius: 12px;
-    border: 1px solid #1f2a44;
-    display: flex;
-    flex-direction: column;
 }
 
-.card:hover {
-    transform: translateY(-3px);
+.kpi .val {
+    font-family: DM Serif Display;
+    font-size: 24px;
+    color: #1e1b4b;
 }
 
-.tag {
-    font-size: 12px;
-    color: #60a5fa;
-    margin-bottom: 6px;
+.section-head {
+    margin-top: 30px;
+    border-top: 2px solid #1e1b4b;
+    padding-top: 10px;
 }
 
-.date-header {
-    margin-top: 25px;
-    border-left: 4px solid #60a5fa;
-    padding-left: 10px;
+.section-num {
+    font-family: DM Serif Display;
+    font-size: 20px;
+    color: #7c3aed;
 }
 
-h3 {
-    margin: 6px 0;
+.section-title {
+    font-family: DM Serif Display;
+    font-size: 22px;
+    color: #1e1b4b;
 }
 
-p {
+.section-lede {
     font-size: 13px;
-    color: #cbd5e1;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: #475569;
+}
+
+.ex {
+    background: white;
+    border: 1px solid #e7e5dd;
+    margin-top: 10px;
+}
+
+.ex-head {
+    padding: 10px;
+    border-bottom: 1px solid #e7e5dd;
+}
+
+.ex-body {
+    padding: 14px;
+}
+
+.ex-num {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #7c3aed;
+}
+
+.ex-cap {
+    font-family: DM Serif Display;
+    font-size: 14px;
+    color: #1e1b4b;
 }
 
 a {
-    color: #60a5fa;
-    margin-top: auto;
+    color: #4F46E5;
+    text-decoration: none;
 }
+
 </style>
+
 </head>
 
 <body>
 
-<div class="header">Retail Intelligence Dashboard</div>
-<div class="sub">Last updated: 2026-05-27 14:50 IST</div>
-
-<!-- ================= TOP BAR (SEARCH + FILTER) ================= -->
-<div class="topbar">
-    <input type="text" id="search" placeholder="Search news...">
-    
-    <select id="category">
-        <option value="all">All Categories</option>
-        <option value="Retail">Retail</option>
-        <option value="Ecommerce">Ecommerce</option>
-        <option value="FMCG">FMCG</option>
-        <option value="Quick Commerce">Quick Commerce</option>
-        <option value="Startups / Funding">Startups</option>
-        <option value="Business / Tech">Business</option>
-    </select>
-
-    <input type="date" id="start">
-    <input type="date" id="end">
+<div class="masthead">
+    DATUM WIKI · Retail Intelligence Dashboard
 </div>
 
-<!-- ================= LIST VIEW ================= -->
-<div class="list">
-
-    <h2 class="date-header">2026-05-27 (47 news)</h2>
-    
-        <div class="card"
-             data-title="Food packs still don&#039;t tell the full story: Firms make selective label changes as FSSAI rules gather dust"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Food packs still don&#039;t tell the full story: Firms make selective label changes as FSSAI rules gather dust</h3>
-            <p>Food companies are now adding voluntary health information to some product labels. These front-of-pack declarations mention sugar, salt, and fat content. This comes as consumers de</p>
-            <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/food-packs-still-dont-tell-the-full-story-firms-make-selective-label-changes-as-fssai-rules-gather-dust/131341459" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Quick commerce becomes FMCG&#039;s biggest online sales channel in India"
-             data-category="Quick Commerce"
-             data-date="2026-05-27">
-
-            <div class="tag">Quick Commerce</div>
-            <h3>Quick commerce becomes FMCG&#039;s biggest online sales channel in India</h3>
-            <p>Latest data from companies including ITC Ltd, AWL Agri Business, Tata Consumer Products and Parle Products showed quick commerce accounted for 60-75% of their total online sales in</p>
-            <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/quick-commerce-becomes-fmcgs-biggest-online-sales-channel-in-india/131341420" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Tata board talks: Chairman Chandra gives the floor to Tata chiefs; calm prevails"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Tata board talks: Chairman Chandra gives the floor to Tata chiefs; calm prevails</h3>
-            <p>Tata Sons board meeting saw constructive discussions. Chairman N Chandrasekaran presented business reviews. Noel Tata focused on Air India and BigBasket. Tata Electronics impressed</p>
-            <a href="https://retail.economictimes.indiatimes.com/news/industry/tata-board-talks-chairman-chandra-gives-the-floor-to-tata-chiefs-calm-prevails/131341377" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Aditya Birla Fashion Q4 net loss widens to Rs 163.8 cr"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Aditya Birla Fashion Q4 net loss widens to Rs 163.8 cr</h3>
-            <p>Aditya Birla Fashion and Retail Ltd reported a wider net loss of Rs 163.81 crore for the March quarter of FY26. Revenue from operations increased by 15.74 percent to Rs 1,990.13 cr</p>
-            <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/aditya-birla-fashion-q4-net-loss-widens-to-rs-163-8-cr/131323469" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Threading Europe: India’s textile majors redraw strategy after tariff turbulence"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Threading Europe: India’s textile majors redraw strategy after tariff turbulence</h3>
-            <p>Indian textile and apparel companies are expanding their presence in Europe and the UK. Upcoming free trade agreements are expected to boost India&#039;s competitiveness against ri</p>
-            <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/apparel/threading-europe-indias-textile-majors-redraw-strategy-after-tariff-turbulence/131326064" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="India’s silver market faces purity crisis amid soaring investment demand"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>India’s silver market faces purity crisis amid soaring investment demand</h3>
-            <p>Counterfeiters are flooding the Indian market with impure silver, exploiting rising prices and demand. Refiners are urging mandatory hallmarking and licensing for silver products t</p>
-            <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/jewellery/indias-silver-market-faces-purity-crisis-amid-soaring-investment-demand/131322131" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Experts flag data spills as house-help platforms bring physical AI home"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Experts flag data spills as house-help platforms bring physical AI home</h3>
-            <p>Recent data-gathering pilots by on-demand service platforms Pronto and Snabbit have drawn a spotlight on India’s emerging physical AI ecosystem – and put safety regulators on edge.</p>
-            <a href="https://retail.economictimes.indiatimes.com/news/e-commerce/e-tailing/experts-flag-data-spills-as-house-help-platforms-bring-physical-ai-home/131321600" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Wilmar International chief says India must target 60% self-sufficiency in edible oils"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Wilmar International chief says India must target 60% self-sufficiency in edible oils</h3>
-            <p>India needs to produce more edible oils domestically. Kuok Khoon Hong, chairman of Wilmar International, suggests aiming for 50-60% self-sufficiency. This move is crucial given Ind</p>
-            <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/wilmar-international-chief-says-india-must-target-60-self-sufficiency-in-edible-oils/131321573" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="SBI Funds starts roadshows for a  ₹13,000-crore IPO, aims launch by July"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>SBI Funds starts roadshows for a  ₹13,000-crore IPO, aims launch by July</h3>
-            <p>SBI Funds Management, India’s largest asset manager, is said to be in talks with investors to raise about  ₹13,000 crore through an IPO for a likely launch in a couple of months. T</p>
-            <a href="https://www.livemint.com/companies/sbi-funds-investors-ipo-launch-by-july-11779858146867.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Supreme Court sets aside CCI’s  ₹202 crore penalty on Amazon in Future Coupons case"
-             data-category="Ecommerce"
-             data-date="2026-05-27">
-
-            <div class="tag">Ecommerce</div>
-            <h3>Supreme Court sets aside CCI’s  ₹202 crore penalty on Amazon in Future Coupons case</h3>
-            <p>The top court has ordered the refund of any amount deposited with interest, overturning the regulator’s action over Amazon’s 2019 Future Coupons investment and disclosure allegatio</p>
-            <a href="https://www.livemint.com/companies/news/supreme-court-sets-aside-cci-s-202-crore-penalty-on-amazon-in-future-coupons-case-11779861339435.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="DS Group brings British chain Ben’s Cookies to India to cater to Gen Z and millennials"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>DS Group brings British chain Ben’s Cookies to India to cater to Gen Z and millennials</h3>
-            <p>DS Group partners with Ben's Cookies to launch seven stores initially in Delhi and Mumbai. The brand focuses on premium cookies and aims to cater to Gen Z and millennials seeking i</p>
-            <a href="https://www.livemint.com/companies/news/ds-group-ben-s-cookies-india-gen-z-millennials-11779816139136.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="SBI says AI-driven banking still needs people, skills and leadership"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>SBI says AI-driven banking still needs people, skills and leadership</h3>
-            <p>Chairman Challa Sreenivasulu Setty has positioned human capital at the centre of SBI’s technology overhaul even as global banks cut jobs amid AI-led restructuring.</p>
-            <a href="https://www.livemint.com/companies/news/sbi-tech-overhaul-ai-driven-banking-human-capital-people-skills-leadership-11779853201790.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="From off-highway tyres to on-road — Balkrishna broadens its bets"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>From off-highway tyres to on-road — Balkrishna broadens its bets</h3>
-            <p>Balkrishna Industries built its business around exporting specialized off-highway tyres. Now, as tariff wars and geopolitical tensions reshape trade, it is diversifying into new se</p>
-            <a href="https://www.livemint.com/companies/facing-an-uncertain-world-india-s-second-largest-tyre-player-is-hedging-its-bets-11779850641213.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Byju Raveendran responds to Singapore Court’s 6-month jail ruling: 'Misleading impression'"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Byju Raveendran responds to Singapore Court’s 6-month jail ruling: 'Misleading impression'</h3>
-            <p>Byju Raveendran has not just been asked to serve six months in jail, but also instructed to pay $70,500 or  ₹67,45,940.</p>
-            <a href="https://www.livemint.com/companies/people/byju-raveendran-responds-to-singapore-court-s-6-month-jail-ruling-misleading-impression-11779857956163.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Byju Raveendran gets 6-month jail term from Singapore court in contempt case"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Byju Raveendran gets 6-month jail term from Singapore court in contempt case</h3>
-            <p>Byju Raveendran has not just been asked to serve six months in jail, but also instructed to pay $70,500 or  ₹67,45,940.</p>
-            <a href="https://www.livemint.com/companies/people/byju-raveendran-gets-6-month-jail-term-from-singapore-court-in-contempt-case-11779853308432.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Startups chase GIFT City licences to win NRI investors, but will the rush last?"
-             data-category="Startups / Funding"
-             data-date="2026-05-27">
-
-            <div class="tag">Startups / Funding</div>
-            <h3>Startups chase GIFT City licences to win NRI investors, but will the rush last?</h3>
-            <p>Platforms are pivoting to a single regulated stack to simplify cross-border flows as market headwinds drive a defensive shift in overseas Indians' wealth. But some caution this inc</p>
-            <a href="https://www.livemint.com/companies/start-ups/gift-city-fintech-licences-nri-investment-middle-east-11779785673715.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="ICICI Prudential Life Insurance to focus on growing absolute VNB amid slump in FY24"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>ICICI Prudential Life Insurance to focus on growing absolute VNB amid slump in FY24</h3>
-            <p> In its Q4FY24 results, the company#39;s VNB fell 19.45 percent to Rs 2,227 crore for FY24</p>
-            <a href="https://www.moneycontrol.com/news/business/icici-prudential-life-insurance-to-focusgrowing-absolute-vnb-amid-slumpfy24_17532041.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Tata Elxsi Q4 net profit, revenue decline QoQ; firm declares dividend of Rs 70 per share"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Tata Elxsi Q4 net profit, revenue decline QoQ; firm declares dividend of Rs 70 per share</h3>
-            <p> The net profit was down 4.6 percent quarter-on-quarter compared to the October to December period of FY24 and 2.32 percent against the March quarter of FY23</p>
-            <a href="https://www.moneycontrol.com/news/business/tata-elxsi-q4-net-profit-revenue-decline-qoq-firm-declares-dividendrs-70-per-share_17532061.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="ICICI Pru Life Q4 net profit falls 26% to Rs 174 cr, insurer announces dividend"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>ICICI Pru Life Q4 net profit falls 26% to Rs 174 cr, insurer announces dividend</h3>
-            <p> Net premium income rose to Rs 14,788 crore</p>
-            <a href="https://www.moneycontrol.com/news/business/icici-pru-life-q4-net-profit-falls-26-to-rs-174-cr-insurer-announces-dividend_17532101.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Cyient DLM#39;s profit after tax in FY24 surges 93%"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Cyient DLM#39;s profit after tax in FY24 surges 93%</h3>
-            <p> For the full year, the company#39;s revenue stood at Rs 1,192 crore, which was 43.2 percent higher compared to the same period of the past financial year</p>
-            <a href="https://www.moneycontrol.com/news/business/cyient-dlm39s-profit-after-taxfy24-surges-93_17532091.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Tata Consumer Q4 net profit falls 19% to Rs 217 cr, firm declares dividend of Rs 7.75 per share"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Tata Consumer Q4 net profit falls 19% to Rs 217 cr, firm declares dividend of Rs 7.75 per share</h3>
-            <p> Revenue increased 8.5 percent to Rs 3,927 crore in the three months ended March 31.</p>
-            <a href="https://www.moneycontrol.com/news/business/tata-consumer-q4-net-profit-falls-19-to-rs-217-cr-firm-declares-dividendrs-775-per-share_17532071.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Hindustan Unilever Q4 Preview: Price cuts, slow demand, regional competition to hurt topline"
-             data-category="FMCG"
-             data-date="2026-05-27">
-
-            <div class="tag">FMCG</div>
-            <h3>Hindustan Unilever Q4 Preview: Price cuts, slow demand, regional competition to hurt topline</h3>
-            <p> The hike in royalty payments to parent Unilever are likely to adversely impact HUL#39;s EBITDA margins, say experts</p>
-            <a href="https://www.moneycontrol.com/news/business/hindustan-unilever-q4-preview-price-cuts-slow-demand-regional-competition-to-hurt-topline_17531901.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="LTIMindtree Q4 Preview: Lower pass-through revenue seen impacting growth marginally"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>LTIMindtree Q4 Preview: Lower pass-through revenue seen impacting growth marginally</h3>
-            <p> A compilation of estimates suggests the company#39;s Q4 FY24 net profit is projected to decline by 2.2 percent quarter on quarter to Rs 1,143.1 crore</p>
-            <a href="https://www.moneycontrol.com/news/business/ltimindtree-q4-preview-lower-pass-through-revenue-seen-impacting-growth-marginally_17531881.html" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Growth-Stage VC Firm Physis Capital Closes Maiden Fund at ₹400 Cr"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Growth-Stage VC Firm Physis Capital Closes Maiden Fund at ₹400 Cr</h3>
-            <p>Growth-stage venture capital (VC) firm Physis Capital has announced the final close of its maiden fund at ₹400 Cr ($48&#8230;</p>
-            <a href="https://inc42.com/buzz/growth-stage-vc-firm-physis-capital-closes-maiden-fund-at-%e2%82%b9400-cr/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Exponent Energy Cofounder Sanjay Jagannath Steps Down"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Exponent Energy Cofounder Sanjay Jagannath Steps Down</h3>
-            <p>Sanjay Byalal Jagannath has exited Exponent Energy, the EV rapid-charging startup he cofounded in 2020 with Arun Vinayak, amid a&#8230;</p>
-            <a href="https://inc42.com/buzz/exponent-energy-cofounder-sanjay-jagannath-steps-down/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Himalaya Wealth Managers Launches ₹500 Cr Fund To Back Growth Stage Deeptech SMEs"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Himalaya Wealth Managers Launches ₹500 Cr Fund To Back Growth Stage Deeptech SMEs</h3>
-            <p>Himalaya Wealth Managers LLP has announced the launch of a new SEBI-registered Category I alternative investment fund (AIF), Himalaya SME&#8230;</p>
-            <a href="https://inc42.com/buzz/himalaya-wealth-managers-launches-%e2%82%b9500-cr-fund-to-back-growth-stage-deeptech-smes/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Electrical Components Manufacturer TIEA Connectors Raises ₹77 Cr"
-             data-category="Startups / Funding"
-             data-date="2026-05-27">
-
-            <div class="tag">Startups / Funding</div>
-            <h3>Electrical Components Manufacturer TIEA Connectors Raises ₹77 Cr</h3>
-            <p>Electrical components manufacturing startup TIEA Connectors has secured ₹77 Cr (about $8 Mn) in its Series A funding round led&#8230;</p>
-            <a href="https://inc42.com/buzz/electrical-components-manufacturer-tiea-connectors-raises-%e2%82%b977-cr/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Unveiling The Inc42 AI Summit 2026 Agenda: Decoding Playbooks Shaping India’s AI Future"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Unveiling The Inc42 AI Summit 2026 Agenda: Decoding Playbooks Shaping India’s AI Future</h3>
-            <p>Back in 2008, Apple popularised a simple idea — think of a use case, and “there’s an app for that”.&#8230;</p>
-            <a href="https://inc42.com/buzz/unveiling-the-inc42-ai-summit-2026-agenda-decoding-playbooks-shaping-indias-ai-future/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="FirstCry Tumbles 7% On Q4 Loss, Margin Pressure"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>FirstCry Tumbles 7% On Q4 Loss, Margin Pressure</h3>
-            <p>Shares of Brainbees Solutions, the parent of omnichannel kidswear brand FirstCry, fell as much as 7% during the intraday trading&#8230;</p>
-            <a href="https://inc42.com/buzz/firstcry-tumbles-7-on-q4-loss-margin-pressure/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="India’s Sovereign AI Reality Check"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>India’s Sovereign AI Reality Check</h3>
-            <p>India was quick to respond to Sam Altman when he underestimated the country’s ability to build something even remotely comparable&#8230;</p>
-            <a href="https://inc42.com/features/indias-sovereign-ai-reality-check/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Byju Raveendran Sentenced To Six Months’ Jail By Singapore Court"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Byju Raveendran Sentenced To Six Months’ Jail By Singapore Court</h3>
-            <p>Troubled edtech startup BYJU’S founder Byju Raveendran has reportedly been sentenced to six months in jail by a Singapore court&#8230;</p>
-            <a href="https://inc42.com/buzz/byju-raveendran-sentenced-to-six-months-jail-by-singapore-court-for-contempt/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Following Shein sale, Everlane founder launches new brand, ‘Still Radical’"
-             data-category="Retail"
-             data-date="2026-05-27">
-
-            <div class="tag">Retail</div>
-            <h3>Following Shein sale, Everlane founder launches new brand, ‘Still Radical’</h3>
-            <p>&quot;Same principles, but a new take. And this time: no venture capital, no private equity,&quot; Michael Preysman writes on the brand&rsquo;s site, which for now is just collecti</p>
-            <a href="https://www.retaildive.com/news/shein-sale-everlane-founder-launches-new-brand-still-radical/821167/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Google launches cross-retailer Universal Cart"
-             data-category="Retail"
-             data-date="2026-05-27">
-
-            <div class="tag">Retail</div>
-            <h3>Google launches cross-retailer Universal Cart</h3>
-            <p>Shoppers can add items to their cart across merchants from Search, Gemini, YouTube and Gmail.</p>
-            <a href="https://www.retaildive.com/news/google-launches-cross-retailer-universal-cart/820957/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Lowe’s courts DIY shoppers as AI tools boost online conversions"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Lowe’s courts DIY shoppers as AI tools boost online conversions</h3>
-            <p>The retailer is aiming to build relationships with its DIY customers through AI-enhanced omnichannel shopping, associate-led services and loyalty program options.</p>
-            <a href="https://www.retaildive.com/news/lowes-diy-shoppers-ai-tools-online-conversions/821019/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Shoe Carnival ditches rebanner strategy"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Shoe Carnival ditches rebanner strategy</h3>
-            <p>The company sees renewed merit in running its namesake and Shoe Station brands as independent components of its portfolio.</p>
-            <a href="https://www.retaildive.com/news/shoe-carnival-ditches-shoe-station-rebanner-strategy/821043/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Walmart ties expected tariff refunds to price strategy amid cost pressures"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Walmart ties expected tariff refunds to price strategy amid cost pressures</h3>
-            <p>CFO John David Rainey said potential recoveries would be directed toward lowering prices as fuel costs pressure consumers.</p>
-            <a href="https://www.retaildive.com/news/walmart-tariff-refunds-price-cuts-low-prices-strategy/821033/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Under Armour reaches 25% SKU reduction goal"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Under Armour reaches 25% SKU reduction goal</h3>
-            <p>The retailer has made efforts to trim its product mix over the last two years as part of a more disciplined inventory management strategy.</p>
-            <a href="https://www.retaildive.com/news/under-armour-sku-reduction-goal/820856/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="5 reasons why Saks Global’s post-bankruptcy forecast is far-fetched"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>5 reasons why Saks Global’s post-bankruptcy forecast is far-fetched</h3>
-            <p>The luxury giant expects to achieve margins and growth that department stores haven&rsquo;t seen in years.</p>
-            <a href="https://www.retaildive.com/news/saks-global-post-bankruptcy-plan-forecast-bonkers/819338/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="The TikTok effect: How viral trends are changing visual merchandising"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>The TikTok effect: How viral trends are changing visual merchandising</h3>
-            <p>The average viral trend lasts just five to 10 days before attention shifts. And with 42% of Gen Z consumers in the U.S. discovering new products on TikTok, the need for speed has n</p>
-            <a href="https://www.retaildive.com/spons/the-tiktok-effect-how-viral-trends-are-changing-visual-merchandising/820559/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Airbnb-backed WeRoad raises $58M to take its group travel platform to the US"
-             data-category="Startups / Funding"
-             data-date="2026-05-27">
-
-            <div class="tag">Startups / Funding</div>
-            <h3>Airbnb-backed WeRoad raises $58M to take its group travel platform to the US</h3>
-            <p>WeRoad, the Milan-based group travel startup, has raised a $58 million Series C round led by Airbnb as it prepares for its first major expansion outside Europe. The funding brings </p>
-            <a href="https://techcrunch.com/2026/05/27/airbnb-backed-weroad-raises-58m-to-take-its-group-travel-platform-to-the-us/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="UK Visa Portal spilled thousands of applicants’ passports and selfies online — and hasn’t fixed the leak"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>UK Visa Portal spilled thousands of applicants’ passports and selfies online — and hasn’t fixed the leak</h3>
-            <p>The third-party website exposed applicants' sensitive documents as part of the U.K. visa application process. Instead of fixing the issue, the company sent attorneys.</p>
-            <a href="https://techcrunch.com/2026/05/26/uk-visa-portal-spilled-thousands-of-applicants-passports-and-selfies-online-and-hasnt-fixed-the-leak/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="What we’re looking for in Startup Battlefield 2026, and how to apply in time for the May 27 deadline"
-             data-category="Startups / Funding"
-             data-date="2026-05-27">
-
-            <div class="tag">Startups / Funding</div>
-            <h3>What we’re looking for in Startup Battlefield 2026, and how to apply in time for the May 27 deadline</h3>
-            <p>Startup Battlefield applications are due tomorrow, so now's the time to put the finishing touches on your submission!</p>
-            <a href="https://techcrunch.com/2026/05/26/what-were-looking-for-in-startup-battlefield-2026-and-how-to-apply-in-time-for-the-may-27-deadline/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Trump administration permits Volvo to keep selling connected cars in the US"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Trump administration permits Volvo to keep selling connected cars in the US</h3>
-            <p>Volvo, which is majority owned by China's Geely Holdings, said it can now move forward with its expansion plans for its U.S. factory.</p>
-            <a href="https://techcrunch.com/2026/05/26/trump-administration-permits-volvo-to-keep-selling-connected-cars-in-the-us/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Trump administration wants nuclear startups to use plutonium for their reactors"
-             data-category="Startups / Funding"
-             data-date="2026-05-27">
-
-            <div class="tag">Startups / Funding</div>
-            <h3>Trump administration wants nuclear startups to use plutonium for their reactors</h3>
-            <p>The U.S. government is sitting on dozens of tons of weapons-grade plutonium. It's hoping startups can find a use for it.</p>
-            <a href="https://techcrunch.com/2026/05/26/trump-administration-wants-nuclear-startups-to-use-plutonium-for-their-reactors/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search</h3>
-            <p>Google overhauled Search at I/O 2026, replacing blue links with AI agents. The backlash has been swift. DuckDuckGo app installs spiked 30% as users seek a way out.</p>
-            <a href="https://techcrunch.com/2026/05/26/duckduckgo-installs-are-up-30-as-users-reject-being-force-fed-googles-ai-search/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="Starship’s path to reusability looks murky after SpaceX’s S-1"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>Starship’s path to reusability looks murky after SpaceX’s S-1</h3>
-            <p>SpaceX's recent IPO and Starship rocket test flight delivered two big data points that offer a realistic vision for the coming years — and one that may disappoint both the company'</p>
-            <a href="https://techcrunch.com/2026/05/26/starships-path-to-reusability-looks-murky-after-spacexs-s-1/" target="_blank">Read more →</a>
-        </div>
-        
-        <div class="card"
-             data-title="SpaceX’s Starlink nabs American Airlines contract, another win for its IPO"
-             data-category="Business / Tech"
-             data-date="2026-05-27">
-
-            <div class="tag">Business / Tech</div>
-            <h3>SpaceX’s Starlink nabs American Airlines contract, another win for its IPO</h3>
-            <p>American Airlines said Tuesday it plans to install Starlink on more than 500 Airbus aircraft, the latest carrier win for IPO-bound SpaceX.</p>
-            <a href="https://techcrunch.com/2026/05/26/spacexs-starlink-nabs-american-airlines-contract-another-win-for-its-ipo/" target="_blank">Read more →</a>
-        </div>
-        
+<div class="byline">
+    Last updated: 2026-05-27 14:57 IST
 </div>
 
-<!-- ================= JS FILTER SYSTEM ================= -->
-<script>
-const search = document.getElementById("search");
-const category = document.getElementById("category");
-const start = document.getElementById("start");
-const end = document.getElementById("end");
+<div class="kpis">
+    <div class="kpi"><div>Total News</div><div class="val">47</div></div>
+    <div class="kpi"><div>Days Covered</div><div class="val">1</div></div>
+    <div class="kpi"><div>System</div><div class="val">Live RSS</div></div>
+</div>
 
-function filterNews() {
-    const s = search.value.toLowerCase();
-    const c = category.value;
-    const sd = start.value;
-    const ed = end.value;
 
-    document.querySelectorAll(".card").forEach(card => {
-        const title = card.dataset.title.toLowerCase();
-        const cat = card.dataset.category;
-        const date = card.dataset.date;
 
-        let show = true;
+    <!-- SECTION -->
+    <div class="section-head">
+        <div class="section-num">2026-05-27</div>
+        <div>
+            <div class="section-title">Retail Intelligence Report</div>
+            <div class="section-lede">📊 Key Intelligence:  | Top sectors: Business / Tech (37), Startups / Funding (5), Retail (2) | Trending: india’s, online, india, strategy, after</div>
+        </div>
+    </div>
 
-        if (s && !title.includes(s)) show = false;
-        if (c !== "all" && cat !== c) show = false;
-        if (sd && date < sd) show = false;
-        if (ed && date > ed) show = false;
+    <!-- EXHIBIT -->
+    <div class="ex">
 
-        card.style.display = show ? "block" : "none";
-    });
-}
+        <div class="ex-head">
+            <div class="ex-num">EXHIBIT · 2026-05-27</div>
+            <div class="ex-cap">Daily News Intelligence Feed</div>
+        </div>
 
-search.addEventListener("input", filterNews);
-category.addEventListener("change", filterNews);
-start.addEventListener("change", filterNews);
-end.addEventListener("change", filterNews);
-</script>
+        <div class="ex-body">
+    
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Food packs still don&#039;t tell the full story: Firms make selective label changes as FSSAI rules gather dust
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Food companies are now adding voluntary health information to some product labels. These front-of-pack declarations mention sugar, salt, and fat content. This c
+            </div>
+
+            <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/food-packs-still-dont-tell-the-full-story-firms-make-selective-label-changes-as-fssai-rules-gather-dust/131341459" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Quick Commerce
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Quick commerce becomes FMCG&#039;s biggest online sales channel in India
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Latest data from companies including ITC Ltd, AWL Agri Business, Tata Consumer Products and Parle Products showed quick commerce accounted for 60-75% of their t
+            </div>
+
+            <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/quick-commerce-becomes-fmcgs-biggest-online-sales-channel-in-india/131341420" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Tata board talks: Chairman Chandra gives the floor to Tata chiefs; calm prevails
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Tata Sons board meeting saw constructive discussions. Chairman N Chandrasekaran presented business reviews. Noel Tata focused on Air India and BigBasket. Tata E
+            </div>
+
+            <a href="https://retail.economictimes.indiatimes.com/news/industry/tata-board-talks-chairman-chandra-gives-the-floor-to-tata-chiefs-calm-prevails/131341377" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Aditya Birla Fashion Q4 net loss widens to Rs 163.8 cr
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Aditya Birla Fashion and Retail Ltd reported a wider net loss of Rs 163.81 crore for the March quarter of FY26. Revenue from operations increased by 15.74 perce
+            </div>
+
+            <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/aditya-birla-fashion-q4-net-loss-widens-to-rs-163-8-cr/131323469" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Threading Europe: India’s textile majors redraw strategy after tariff turbulence
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Indian textile and apparel companies are expanding their presence in Europe and the UK. Upcoming free trade agreements are expected to boost India&#039;s compet
+            </div>
+
+            <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/apparel/threading-europe-indias-textile-majors-redraw-strategy-after-tariff-turbulence/131326064" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                India’s silver market faces purity crisis amid soaring investment demand
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Counterfeiters are flooding the Indian market with impure silver, exploiting rising prices and demand. Refiners are urging mandatory hallmarking and licensing f
+            </div>
+
+            <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/jewellery/indias-silver-market-faces-purity-crisis-amid-soaring-investment-demand/131322131" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Experts flag data spills as house-help platforms bring physical AI home
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Recent data-gathering pilots by on-demand service platforms Pronto and Snabbit have drawn a spotlight on India’s emerging physical AI ecosystem – and put safety
+            </div>
+
+            <a href="https://retail.economictimes.indiatimes.com/news/e-commerce/e-tailing/experts-flag-data-spills-as-house-help-platforms-bring-physical-ai-home/131321600" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Wilmar International chief says India must target 60% self-sufficiency in edible oils
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                India needs to produce more edible oils domestically. Kuok Khoon Hong, chairman of Wilmar International, suggests aiming for 50-60% self-sufficiency. This move 
+            </div>
+
+            <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/wilmar-international-chief-says-india-must-target-60-self-sufficiency-in-edible-oils/131321573" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                SBI Funds starts roadshows for a  ₹13,000-crore IPO, aims launch by July
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                SBI Funds Management, India’s largest asset manager, is said to be in talks with investors to raise about  ₹13,000 crore through an IPO for a likely launch in a
+            </div>
+
+            <a href="https://www.livemint.com/companies/sbi-funds-investors-ipo-launch-by-july-11779858146867.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Ecommerce
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Supreme Court sets aside CCI’s  ₹202 crore penalty on Amazon in Future Coupons case
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                The top court has ordered the refund of any amount deposited with interest, overturning the regulator’s action over Amazon’s 2019 Future Coupons investment and 
+            </div>
+
+            <a href="https://www.livemint.com/companies/news/supreme-court-sets-aside-cci-s-202-crore-penalty-on-amazon-in-future-coupons-case-11779861339435.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                DS Group brings British chain Ben’s Cookies to India to cater to Gen Z and millennials
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                DS Group partners with Ben's Cookies to launch seven stores initially in Delhi and Mumbai. The brand focuses on premium cookies and aims to cater to Gen Z and m
+            </div>
+
+            <a href="https://www.livemint.com/companies/news/ds-group-ben-s-cookies-india-gen-z-millennials-11779816139136.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                SBI says AI-driven banking still needs people, skills and leadership
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Chairman Challa Sreenivasulu Setty has positioned human capital at the centre of SBI’s technology overhaul even as global banks cut jobs amid AI-led restructuri
+            </div>
+
+            <a href="https://www.livemint.com/companies/news/sbi-tech-overhaul-ai-driven-banking-human-capital-people-skills-leadership-11779853201790.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                From off-highway tyres to on-road — Balkrishna broadens its bets
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Balkrishna Industries built its business around exporting specialized off-highway tyres. Now, as tariff wars and geopolitical tensions reshape trade, it is dive
+            </div>
+
+            <a href="https://www.livemint.com/companies/facing-an-uncertain-world-india-s-second-largest-tyre-player-is-hedging-its-bets-11779850641213.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Byju Raveendran responds to Singapore Court’s 6-month jail ruling: 'Misleading impression'
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Byju Raveendran has not just been asked to serve six months in jail, but also instructed to pay $70,500 or  ₹67,45,940.
+            </div>
+
+            <a href="https://www.livemint.com/companies/people/byju-raveendran-responds-to-singapore-court-s-6-month-jail-ruling-misleading-impression-11779857956163.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Byju Raveendran gets 6-month jail term from Singapore court in contempt case
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Byju Raveendran has not just been asked to serve six months in jail, but also instructed to pay $70,500 or  ₹67,45,940.
+            </div>
+
+            <a href="https://www.livemint.com/companies/people/byju-raveendran-gets-6-month-jail-term-from-singapore-court-in-contempt-case-11779853308432.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Startups / Funding
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Startups chase GIFT City licences to win NRI investors, but will the rush last?
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Platforms are pivoting to a single regulated stack to simplify cross-border flows as market headwinds drive a defensive shift in overseas Indians' wealth. But s
+            </div>
+
+            <a href="https://www.livemint.com/companies/start-ups/gift-city-fintech-licences-nri-investment-middle-east-11779785673715.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                ICICI Prudential Life Insurance to focus on growing absolute VNB amid slump in FY24
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                 In its Q4FY24 results, the company#39;s VNB fell 19.45 percent to Rs 2,227 crore for FY24
+            </div>
+
+            <a href="https://www.moneycontrol.com/news/business/icici-prudential-life-insurance-to-focusgrowing-absolute-vnb-amid-slumpfy24_17532041.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Tata Elxsi Q4 net profit, revenue decline QoQ; firm declares dividend of Rs 70 per share
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                 The net profit was down 4.6 percent quarter-on-quarter compared to the October to December period of FY24 and 2.32 percent against the March quarter of FY23
+            </div>
+
+            <a href="https://www.moneycontrol.com/news/business/tata-elxsi-q4-net-profit-revenue-decline-qoq-firm-declares-dividendrs-70-per-share_17532061.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                ICICI Pru Life Q4 net profit falls 26% to Rs 174 cr, insurer announces dividend
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                 Net premium income rose to Rs 14,788 crore
+            </div>
+
+            <a href="https://www.moneycontrol.com/news/business/icici-pru-life-q4-net-profit-falls-26-to-rs-174-cr-insurer-announces-dividend_17532101.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Cyient DLM#39;s profit after tax in FY24 surges 93%
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                 For the full year, the company#39;s revenue stood at Rs 1,192 crore, which was 43.2 percent higher compared to the same period of the past financial year
+            </div>
+
+            <a href="https://www.moneycontrol.com/news/business/cyient-dlm39s-profit-after-taxfy24-surges-93_17532091.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Tata Consumer Q4 net profit falls 19% to Rs 217 cr, firm declares dividend of Rs 7.75 per share
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                 Revenue increased 8.5 percent to Rs 3,927 crore in the three months ended March 31.
+            </div>
+
+            <a href="https://www.moneycontrol.com/news/business/tata-consumer-q4-net-profit-falls-19-to-rs-217-cr-firm-declares-dividendrs-775-per-share_17532071.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                FMCG
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Hindustan Unilever Q4 Preview: Price cuts, slow demand, regional competition to hurt topline
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                 The hike in royalty payments to parent Unilever are likely to adversely impact HUL#39;s EBITDA margins, say experts
+            </div>
+
+            <a href="https://www.moneycontrol.com/news/business/hindustan-unilever-q4-preview-price-cuts-slow-demand-regional-competition-to-hurt-topline_17531901.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                LTIMindtree Q4 Preview: Lower pass-through revenue seen impacting growth marginally
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                 A compilation of estimates suggests the company#39;s Q4 FY24 net profit is projected to decline by 2.2 percent quarter on quarter to Rs 1,143.1 crore
+            </div>
+
+            <a href="https://www.moneycontrol.com/news/business/ltimindtree-q4-preview-lower-pass-through-revenue-seen-impacting-growth-marginally_17531881.html" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Growth-Stage VC Firm Physis Capital Closes Maiden Fund at ₹400 Cr
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Growth-stage venture capital (VC) firm Physis Capital has announced the final close of its maiden fund at ₹400 Cr ($48&#8230;
+            </div>
+
+            <a href="https://inc42.com/buzz/growth-stage-vc-firm-physis-capital-closes-maiden-fund-at-%e2%82%b9400-cr/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Exponent Energy Cofounder Sanjay Jagannath Steps Down
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Sanjay Byalal Jagannath has exited Exponent Energy, the EV rapid-charging startup he cofounded in 2020 with Arun Vinayak, amid a&#8230;
+            </div>
+
+            <a href="https://inc42.com/buzz/exponent-energy-cofounder-sanjay-jagannath-steps-down/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Himalaya Wealth Managers Launches ₹500 Cr Fund To Back Growth Stage Deeptech SMEs
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Himalaya Wealth Managers LLP has announced the launch of a new SEBI-registered Category I alternative investment fund (AIF), Himalaya SME&#8230;
+            </div>
+
+            <a href="https://inc42.com/buzz/himalaya-wealth-managers-launches-%e2%82%b9500-cr-fund-to-back-growth-stage-deeptech-smes/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Startups / Funding
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Electrical Components Manufacturer TIEA Connectors Raises ₹77 Cr
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Electrical components manufacturing startup TIEA Connectors has secured ₹77 Cr (about $8 Mn) in its Series A funding round led&#8230;
+            </div>
+
+            <a href="https://inc42.com/buzz/electrical-components-manufacturer-tiea-connectors-raises-%e2%82%b977-cr/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Unveiling The Inc42 AI Summit 2026 Agenda: Decoding Playbooks Shaping India’s AI Future
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Back in 2008, Apple popularised a simple idea — think of a use case, and “there’s an app for that”.&#8230;
+            </div>
+
+            <a href="https://inc42.com/buzz/unveiling-the-inc42-ai-summit-2026-agenda-decoding-playbooks-shaping-indias-ai-future/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                FirstCry Tumbles 7% On Q4 Loss, Margin Pressure
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Shares of Brainbees Solutions, the parent of omnichannel kidswear brand FirstCry, fell as much as 7% during the intraday trading&#8230;
+            </div>
+
+            <a href="https://inc42.com/buzz/firstcry-tumbles-7-on-q4-loss-margin-pressure/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                India’s Sovereign AI Reality Check
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                India was quick to respond to Sam Altman when he underestimated the country’s ability to build something even remotely comparable&#8230;
+            </div>
+
+            <a href="https://inc42.com/features/indias-sovereign-ai-reality-check/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Byju Raveendran Sentenced To Six Months’ Jail By Singapore Court
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Troubled edtech startup BYJU’S founder Byju Raveendran has reportedly been sentenced to six months in jail by a Singapore court&#8230;
+            </div>
+
+            <a href="https://inc42.com/buzz/byju-raveendran-sentenced-to-six-months-jail-by-singapore-court-for-contempt/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Retail
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Following Shein sale, Everlane founder launches new brand, ‘Still Radical’
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                &quot;Same principles, but a new take. And this time: no venture capital, no private equity,&quot; Michael Preysman writes on the brand&rsquo;s site, which for 
+            </div>
+
+            <a href="https://www.retaildive.com/news/shein-sale-everlane-founder-launches-new-brand-still-radical/821167/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Retail
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Google launches cross-retailer Universal Cart
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Shoppers can add items to their cart across merchants from Search, Gemini, YouTube and Gmail.
+            </div>
+
+            <a href="https://www.retaildive.com/news/google-launches-cross-retailer-universal-cart/820957/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Lowe’s courts DIY shoppers as AI tools boost online conversions
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                The retailer is aiming to build relationships with its DIY customers through AI-enhanced omnichannel shopping, associate-led services and loyalty program option
+            </div>
+
+            <a href="https://www.retaildive.com/news/lowes-diy-shoppers-ai-tools-online-conversions/821019/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Shoe Carnival ditches rebanner strategy
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                The company sees renewed merit in running its namesake and Shoe Station brands as independent components of its portfolio.
+            </div>
+
+            <a href="https://www.retaildive.com/news/shoe-carnival-ditches-shoe-station-rebanner-strategy/821043/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Walmart ties expected tariff refunds to price strategy amid cost pressures
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                CFO John David Rainey said potential recoveries would be directed toward lowering prices as fuel costs pressure consumers.
+            </div>
+
+            <a href="https://www.retaildive.com/news/walmart-tariff-refunds-price-cuts-low-prices-strategy/821033/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Under Armour reaches 25% SKU reduction goal
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                The retailer has made efforts to trim its product mix over the last two years as part of a more disciplined inventory management strategy.
+            </div>
+
+            <a href="https://www.retaildive.com/news/under-armour-sku-reduction-goal/820856/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                5 reasons why Saks Global’s post-bankruptcy forecast is far-fetched
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                The luxury giant expects to achieve margins and growth that department stores haven&rsquo;t seen in years.
+            </div>
+
+            <a href="https://www.retaildive.com/news/saks-global-post-bankruptcy-plan-forecast-bonkers/819338/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                The TikTok effect: How viral trends are changing visual merchandising
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                The average viral trend lasts just five to 10 days before attention shifts. And with 42% of Gen Z consumers in the U.S. discovering new products on TikTok, the 
+            </div>
+
+            <a href="https://www.retaildive.com/spons/the-tiktok-effect-how-viral-trends-are-changing-visual-merchandising/820559/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Startups / Funding
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Airbnb-backed WeRoad raises $58M to take its group travel platform to the US
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                WeRoad, the Milan-based group travel startup, has raised a $58 million Series C round led by Airbnb as it prepares for its first major expansion outside Europe.
+            </div>
+
+            <a href="https://techcrunch.com/2026/05/27/airbnb-backed-weroad-raises-58m-to-take-its-group-travel-platform-to-the-us/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                UK Visa Portal spilled thousands of applicants’ passports and selfies online — and hasn’t fixed the leak
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                The third-party website exposed applicants' sensitive documents as part of the U.K. visa application process. Instead of fixing the issue, the company sent atto
+            </div>
+
+            <a href="https://techcrunch.com/2026/05/26/uk-visa-portal-spilled-thousands-of-applicants-passports-and-selfies-online-and-hasnt-fixed-the-leak/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Startups / Funding
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                What we’re looking for in Startup Battlefield 2026, and how to apply in time for the May 27 deadline
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Startup Battlefield applications are due tomorrow, so now's the time to put the finishing touches on your submission!
+            </div>
+
+            <a href="https://techcrunch.com/2026/05/26/what-were-looking-for-in-startup-battlefield-2026-and-how-to-apply-in-time-for-the-may-27-deadline/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Trump administration permits Volvo to keep selling connected cars in the US
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Volvo, which is majority owned by China's Geely Holdings, said it can now move forward with its expansion plans for its U.S. factory.
+            </div>
+
+            <a href="https://techcrunch.com/2026/05/26/trump-administration-permits-volvo-to-keep-selling-connected-cars-in-the-us/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Startups / Funding
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Trump administration wants nuclear startups to use plutonium for their reactors
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                The U.S. government is sitting on dozens of tons of weapons-grade plutonium. It's hoping startups can find a use for it.
+            </div>
+
+            <a href="https://techcrunch.com/2026/05/26/trump-administration-wants-nuclear-startups-to-use-plutonium-for-their-reactors/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                Google overhauled Search at I/O 2026, replacing blue links with AI agents. The backlash has been swift. DuckDuckGo app installs spiked 30% as users seek a way o
+            </div>
+
+            <a href="https://techcrunch.com/2026/05/26/duckduckgo-installs-are-up-30-as-users-reject-being-force-fed-googles-ai-search/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                Starship’s path to reusability looks murky after SpaceX’s S-1
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                SpaceX's recent IPO and Starship rocket test flight delivered two big data points that offer a realistic vision for the coming years — and one that may disappoi
+            </div>
+
+            <a href="https://techcrunch.com/2026/05/26/starships-path-to-reusability-looks-murky-after-spacexs-s-1/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
+
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                Business / Tech
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                SpaceX’s Starlink nabs American Airlines contract, another win for its IPO
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                American Airlines said Tuesday it plans to install Starlink on more than 500 Airbus aircraft, the latest carrier win for IPO-bound SpaceX.
+            </div>
+
+            <a href="https://techcrunch.com/2026/05/26/spacexs-starlink-nabs-american-airlines-contract-another-win-for-its-ipo/" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
+        </div>
+        
+        </div>
+    </div>
+    
 
 </body>
 </html>
