@@ -2,7 +2,7 @@ import feedparser
 from datetime import datetime
 
 # -----------------------------
-# 8 STRONG RSS SOURCES
+# RSS SOURCES (8 STRONG FEEDS)
 # -----------------------------
 feeds = [
     "https://retail.economictimes.indiatimes.com/rss/topstories",
@@ -40,36 +40,60 @@ def get_category(title):
         return "Business / Tech"
 
 # -----------------------------
-# BUILD NEWS CARDS
+# STEP 1: COLLECT ALL NEWS
 # -----------------------------
-news_cards = ""
+all_news = []
 
 for url in feeds:
     feed = feedparser.parse(url)
 
     for entry in feed.entries[:8]:
 
-        category = get_category(entry.title)
-
-        summary = entry.summary if hasattr(entry, "summary") else ""
-        summary = summary[:180].replace("<p>", "").replace("</p>", "")
-
-        news_cards += f"""
-        <div class="card">
-            <div class="tag">{category}</div>
-            <h3>{entry.title}</h3>
-            <p>{summary}...</p>
-            <a href="{entry.link}" target="_blank">Read more →</a>
-        </div>
-        """
+        all_news.append({
+            "title": entry.title,
+            "link": entry.link,
+            "summary": entry.summary if hasattr(entry, "summary") else ""
+        })
 
 # -----------------------------
-# LAST UPDATED TIME
+# STEP 2: REMOVE DUPLICATES
+# -----------------------------
+seen = set()
+unique_news = []
+
+for n in all_news:
+    if n["title"] not in seen:
+        unique_news.append(n)
+        seen.add(n["title"])
+
+# -----------------------------
+# STEP 3: BUILD NEWS CARDS
+# -----------------------------
+news_cards = ""
+
+for n in unique_news:
+
+    category = get_category(n["title"])
+    summary = n["summary"]
+    summary = summary.replace("<p>", "").replace("</p>", "")
+    summary = summary[:180]
+
+    news_cards += f"""
+    <div class="card">
+        <div class="tag">{category}</div>
+        <h3>{n["title"]}</h3>
+        <p>{summary}...</p>
+        <a href="{n["link"]}" target="_blank">Read more →</a>
+    </div>
+    """
+
+# -----------------------------
+# STEP 4: LAST UPDATED TIME
 # -----------------------------
 last_updated = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 # -----------------------------
-# FINAL HTML DASHBOARD
+# STEP 5: FINAL HTML DASHBOARD
 # -----------------------------
 html = f"""
 <!DOCTYPE html>
@@ -87,20 +111,21 @@ body {{
 }}
 
 .header {{
-    font-size: 30px;
+    font-size: 32px;
     font-weight: bold;
     margin-bottom: 5px;
 }}
 
 .sub {{
     color: #94a3b8;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }}
 
 .grid {{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 18px;
+    align-items: stretch;
 }}
 
 .card {{
@@ -116,19 +141,29 @@ body {{
 }}
 
 .tag {{
-    display: inline-block;
     font-size: 12px;
     color: #60a5fa;
     margin-bottom: 8px;
+    display: inline-block;
 }}
 
 h3 {{
     font-size: 16px;
+    margin: 8px 0;
+}}
+
+p {{
+    font-size: 13px;
+    color: #cbd5e1;
 }}
 
 a {{
     color: #60a5fa;
     text-decoration: none;
+}}
+
+a:hover {{
+    text-decoration: underline;
 }}
 </style>
 
@@ -137,7 +172,7 @@ a {{
 <body>
 
 <div class="header">Retail Intelligence Dashboard</div>
-<div class="sub">Auto-generated daily retail & ecommerce insights</div>
+<div class="sub">Auto-generated retail & ecommerce insights</div>
 <div class="sub">Last updated: {last_updated}</div>
 
 <div class="grid">
@@ -149,7 +184,7 @@ a {{
 """
 
 # -----------------------------
-# WRITE OUTPUT FILE
+# STEP 6: WRITE FILE
 # -----------------------------
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
