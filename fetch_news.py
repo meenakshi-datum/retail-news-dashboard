@@ -1,8 +1,9 @@
 import feedparser
 from datetime import datetime
+import re
 
 # -----------------------------
-# RSS SOURCES (8 STRONG FEEDS)
+# RSS SOURCES
 # -----------------------------
 feeds = [
     "https://retail.economictimes.indiatimes.com/rss/topstories",
@@ -40,7 +41,7 @@ def get_category(title):
         return "Business / Tech"
 
 # -----------------------------
-# STEP 1: COLLECT ALL NEWS
+# COLLECT NEWS
 # -----------------------------
 all_news = []
 
@@ -48,15 +49,14 @@ for url in feeds:
     feed = feedparser.parse(url)
 
     for entry in feed.entries[:8]:
-
         all_news.append({
             "title": entry.title,
             "link": entry.link,
-            "summary": entry.summary if hasattr(entry, "summary") else ""
+            "summary": entry.get("summary", "")
         })
 
 # -----------------------------
-# STEP 2: REMOVE DUPLICATES
+# REMOVE DUPLICATES
 # -----------------------------
 seen = set()
 unique_news = []
@@ -67,39 +67,45 @@ for n in all_news:
         seen.add(n["title"])
 
 # -----------------------------
-# STEP 3: BUILD NEWS CARDS
+# BUILD CARDS
 # -----------------------------
 news_cards = ""
 
 for n in unique_news:
 
     category = get_category(n["title"])
-    summary = n["summary"]
-    summary = summary.replace("<p>", "").replace("</p>", "")
+
+    # CLEAN SUMMARY (IMPORTANT FIX)
+    summary = re.sub("<.*?>", "", n["summary"])
     summary = summary[:180]
+
+    if not summary:
+        summary = "No summary available."
 
     news_cards += f"""
     <div class="card">
         <div class="tag">{category}</div>
         <h3>{n["title"]}</h3>
-        <p>{summary}...</p>
+        <p>{summary}</p>
         <a href="{n["link"]}" target="_blank">Read more →</a>
     </div>
     """
 
 # -----------------------------
-# STEP 4: LAST UPDATED TIME
+# LAST UPDATED
 # -----------------------------
 last_updated = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 # -----------------------------
-# STEP 5: FINAL HTML DASHBOARD
+# HTML + FIXED CSS (IMPORTANT SECTION)
 # -----------------------------
 html = f"""
 <!DOCTYPE html>
 <html>
 <head>
 <title>Retail Intelligence Dashboard</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body {{
@@ -118,14 +124,14 @@ body {{
 
 .sub {{
     color: #94a3b8;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }}
 
 .grid {{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 18px;
-    align-items: stretch;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    align-items: start;
 }}
 
 .card {{
@@ -133,31 +139,43 @@ body {{
     padding: 16px;
     border-radius: 14px;
     border: 1px solid #1f2a44;
-    transition: 0.2s;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 180px;
 }}
 
 .card:hover {{
     transform: translateY(-4px);
+    transition: 0.2s;
 }}
 
 .tag {{
     font-size: 12px;
     color: #60a5fa;
     margin-bottom: 8px;
-    display: inline-block;
 }}
 
 h3 {{
-    font-size: 16px;
+    font-size: 15px;
     margin: 8px 0;
+    line-height: 1.4;
 }}
 
 p {{
     font-size: 13px;
     color: #cbd5e1;
+    line-height: 1.4;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }}
 
 a {{
+    margin-top: auto;
     color: #60a5fa;
     text-decoration: none;
 }}
@@ -184,7 +202,7 @@ a:hover {{
 """
 
 # -----------------------------
-# STEP 6: WRITE FILE
+# WRITE OUTPUT
 # -----------------------------
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
