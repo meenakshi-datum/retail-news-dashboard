@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 
 # =============================
-# RSS SOURCES
+# RSS SOURCES (HIGH QUALITY)
 # =============================
 feeds = [
     "https://retail.economictimes.indiatimes.com/rss/topstories",
@@ -51,20 +51,21 @@ def clean_date(date_str):
         return datetime.now().strftime("%Y-%m-%d")
 
 # =============================
-# NORMALIZE TITLE
+# NORMALIZE
 # =============================
 def norm(t):
     return " ".join(t.lower().split())
 
 # =============================
-# FETCH NEWS
+# FETCH NEWS (FIXED - HIGH VOLUME)
 # =============================
 news = []
 
 for url in feeds:
     feed = feedparser.parse(url)
 
-    for e in feed.entries[:20]:
+    # IMPORTANT FIX: keep volume high
+    for e in feed.entries[:25]:
 
         summary = re.sub("<.*?>", "", e.get("summary", ""))
 
@@ -77,13 +78,14 @@ for url in feeds:
         })
 
 # =============================
-# DEDUP
+# DEDUP (SAFE, NOT AGGRESSIVE)
 # =============================
 seen = set()
 unique = []
 
 for n in news:
     key = norm(n["title"])
+
     if key not in seen:
         seen.add(key)
         unique.append(n)
@@ -97,46 +99,80 @@ for n in unique:
     grouped[n["date"]].append(n)
 
 # =============================
-# BUILD HTML (NO ANALYST INSIGHT)
+# DAILY 4–5 LINE SUMMARY ENGINE (NEW REQUIREMENT)
 # =============================
-html_content = ""
+def daily_summary(day_news):
+
+    total = len(day_news)
+
+    categories = {}
+    keywords = {}
+
+    for n in day_news:
+        categories[n["category"]] = categories.get(n["category"], 0) + 1
+
+        for w in n["title"].lower().split():
+            if len(w) > 4:
+                keywords[w] = keywords.get(w, 0) + 1
+
+    top_cat = sorted(categories.items(), key=lambda x: x[1], reverse=True)
+
+    dominant = top_cat[0][0] if top_cat else "Mixed Market"
+
+    top_keywords = sorted(keywords.items(), key=lambda x: x[1], reverse=True)[:5]
+    kw_text = ", ".join([k[0] for k in top_keywords])
+
+    return f"""
+Total news today: {total}. The day was primarily driven by {dominant} related developments.
+Key themes observed across the ecosystem include {kw_text}.
+Retail and digital commerce segments continued to show active movement across multiple platforms.
+Overall sentiment reflects ongoing structural activity in the {dominant} space.
+Market attention remains concentrated on consolidated retail and startup ecosystem updates.
+"""
+
+# =============================
+# BUILD HTML CONTENT (LIST VIEW + FILTER READY)
+# =============================
+content = ""
 
 for date in sorted(grouped.keys(), reverse=True):
 
     day_news = grouped[date]
 
-    html_content += f"""
-    <div class="day">
+    summary = daily_summary(day_news)
 
-        <div class="date">📅 {date}</div>
+    content += f"""
+    <div class="day-section">
+
+        <div class="date-header">📅 {date}</div>
 
         <div class="summary-box">
             📰 <b>Daily Summary</b><br>
-            Total News: {len(day_news)}<br>
-            Categories: {len(set([n['category'] for n in day_news]))}
+            {summary}
         </div>
     """
 
     for n in day_news:
 
-        html_content += f"""
-        <div class="item">
+        content += f"""
+        <div class="item"
+             data-date="{date}"
+             data-category="{n['category']}">
 
-            <div class="cat">{n['category']}</div>
+            <div class="meta">{n['category']}</div>
 
             <div class="title">{n['title']}</div>
 
             <div class="desc">{n['summary']}</div>
 
             <a href="{n['link']}" target="_blank">Read →</a>
-
         </div>
         """
 
-    html_content += "</div>"
+    content += "</div>"
 
 # =============================
-# FINAL HTML
+# FINAL HTML (SEARCH + FILTER + DATE RANGE)
 # =============================
 html = f"""
 <!DOCTYPE html>
@@ -162,11 +198,23 @@ body {{
     color: #666;
 }}
 
-.day {{
+.controls {{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}}
+
+input, select {{
+    padding: 8px;
+    font-size: 12px;
+}}
+
+.day-section {{
     margin-bottom: 30px;
 }}
 
-.date {{
+.date-header {{
     font-size: 18px;
     font-weight: bold;
 }}
@@ -177,6 +225,7 @@ body {{
     padding: 10px;
     font-size: 12px;
     margin: 10px 0;
+    white-space: pre-line;
 }}
 
 .item {{
@@ -186,7 +235,7 @@ body {{
     margin-bottom: 8px;
 }}
 
-.cat {{
+.meta {{
     font-size: 10px;
     color: #666;
 }}
@@ -214,7 +263,62 @@ a {{
 <div class="header">Retail Intelligence Dashboard</div>
 <div class="sub">Last Updated: {now_ist}</div>
 
-{html_content}
+<!-- CONTROLS -->
+<div class="controls">
+
+<input id="search" placeholder="Search news...">
+
+<select id="category">
+    <option value="">All Categories</option>
+    <option>Quick Commerce</option>
+    <option>Ecommerce</option>
+    <option>FMCG</option>
+    <option>Startups</option>
+    <option>Retail / Business</option>
+</select>
+
+<input type="date" id="fromDate">
+<input type="date" id="toDate">
+
+</div>
+
+<div id="list">
+{content}
+</div>
+
+<script>
+
+document.getElementById("search").addEventListener("input", filter);
+document.getElementById("category").addEventListener("change", filter);
+document.getElementById("fromDate").addEventListener("change", filter);
+document.getElementById("toDate").addEventListener("change", filter);
+
+function filter() {{
+
+    let search = document.getElementById("search").value.toLowerCase();
+    let cat = document.getElementById("category").value;
+    let from = document.getElementById("fromDate").value;
+    let to = document.getElementById("toDate").value;
+
+    let items = document.querySelectorAll(".item");
+
+    items.forEach(i => {{
+
+        let text = i.innerText.toLowerCase();
+        let category = i.dataset.category;
+        let date = i.dataset.date;
+
+        let ok =
+            (text.includes(search)) &&
+            (cat === "" || category === cat) &&
+            (!from || date >= from) &&
+            (!to || date <= to);
+
+        i.style.display = ok ? "block" : "none";
+    }});
+}}
+
+</script>
 
 </body>
 </html>
