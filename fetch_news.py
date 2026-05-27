@@ -1,11 +1,12 @@
 import feedparser
 from datetime import datetime, timezone, timedelta
 import re
+import time
 from collections import defaultdict
 
-# -----------------------------
+# =============================
 # RSS SOURCES
-# -----------------------------
+# =============================
 feeds = [
     "https://retail.economictimes.indiatimes.com/rss/topstories",
     "https://www.livemint.com/rss/companies",
@@ -17,9 +18,9 @@ feeds = [
     "https://techcrunch.com/feed/"
 ]
 
-# -----------------------------
-# CATEGORY FUNCTION
-# -----------------------------
+# =============================
+# CATEGORY SYSTEM
+# =============================
 def get_category(title):
     title = title.lower()
 
@@ -41,15 +42,30 @@ def get_category(title):
     else:
         return "Business / Tech"
 
-# -----------------------------
+# =============================
 # IST TIME
-# -----------------------------
+# =============================
 ist = timezone(timedelta(hours=5, minutes=30))
 last_updated = datetime.now(ist).strftime("%Y-%m-%d %H:%M IST")
 
-# -----------------------------
+# =============================
+# DATE CLEANER
+# =============================
+def clean_date(date_str):
+    if not date_str:
+        return datetime.now(ist).strftime("%Y-%m-%d")
+
+    try:
+        return time.strftime("%Y-%m-%d", time.strptime(date_str[:25], "%a, %d %b %Y"))
+    except:
+        try:
+            return datetime.strptime(date_str[:10], "%Y-%m-%d").strftime("%Y-%m-%d")
+        except:
+            return datetime.now(ist).strftime("%Y-%m-%d")
+
+# =============================
 # COLLECT NEWS
-# -----------------------------
+# =============================
 all_news = []
 
 for url in feeds:
@@ -60,22 +76,18 @@ for url in feeds:
         summary = re.sub("<.*?>", "", entry.get("summary", ""))
 
         raw_date = entry.get("published") or entry.get("updated") or ""
-        try:
-            clean_date = time.strftime("%Y-%m-%d", time.strptime(raw_date[:25], "%a, %d %b %Y"))
-        except:
-            clean_date = datetime.now(ist).strftime("%Y-%m-%d")
 
         all_news.append({
             "title": entry.title,
             "link": entry.link,
-            "summary": summary[:180],
-            "date": clean_date,
+            "summary": summary[:160],
+            "date": clean_date(raw_date),
             "category": get_category(entry.title)
         })
 
-# -----------------------------
+# =============================
 # REMOVE DUPLICATES
-# -----------------------------
+# =============================
 seen = set()
 unique_news = []
 
@@ -84,205 +96,247 @@ for n in all_news:
         unique_news.append(n)
         seen.add(n["title"])
 
-# -----------------------------
+# =============================
 # GROUP BY DATE
-# -----------------------------
+# =============================
 grouped = defaultdict(list)
-date_summary = {}
 
 for n in unique_news:
     grouped[n["date"]].append(n)
-    date_summary[n["date"]] = date_summary.get(n["date"], 0) + 1
 
-# -----------------------------
-# BUILD LIST VIEW CARDS
-# -----------------------------
-news_cards = ""
+# =============================
+# DAILY INTELLIGENCE SUMMARY
+# =============================
+def generate_day_summary(news_list):
+    cats = {}
+    words = {}
+
+    for n in news_list:
+        cats[n["category"]] = cats.get(n["category"], 0) + 1
+
+        for w in n["title"].lower().split():
+            if len(w) > 4:
+                words[w] = words.get(w, 0) + 1
+
+    top_cats = sorted(cats.items(), key=lambda x: x[1], reverse=True)[:3]
+    top_words = sorted(words.items(), key=lambda x: x[1], reverse=True)[:5]
+
+    return (
+        "📊 Key Intelligence: "
+        + " | Top sectors: "
+        + ", ".join([f"{c[0]} ({c[1]})" for c in top_cats])
+        + " | Trending: "
+        + ", ".join([w[0] for w in top_words])
+    )
+
+# =============================
+# BUILD DATUM STYLE HTML
+# =============================
+content = ""
 
 for date in sorted(grouped.keys(), reverse=True):
 
-    news_cards += f"""
-    <h2 class="date-header">{date} ({date_summary[date]} news)</h2>
+    day_news = grouped[date]
+    summary = generate_day_summary(day_news)
+
+    content += f"""
+
+    <!-- SECTION -->
+    <div class="section-head">
+        <div class="section-num">{date}</div>
+        <div>
+            <div class="section-title">Retail Intelligence Report</div>
+            <div class="section-lede">{summary}</div>
+        </div>
+    </div>
+
+    <!-- EXHIBIT -->
+    <div class="ex">
+
+        <div class="ex-head">
+            <div class="ex-num">EXHIBIT · {date}</div>
+            <div class="ex-cap">Daily News Intelligence Feed</div>
+        </div>
+
+        <div class="ex-body">
     """
 
-    for n in grouped[date]:
+    for n in day_news:
 
-        news_cards += f"""
-        <div class="card"
-             data-title="{n['title']}"
-             data-category="{n['category']}"
-             data-date="{n['date']}">
+        content += f"""
+        <div style="padding:10px 0; border-bottom:1px solid #e7e5dd;">
 
-            <div class="tag">{n['category']}</div>
-            <h3>{n['title']}</h3>
-            <p>{n['summary']}</p>
-            <a href="{n['link']}" target="_blank">Read more →</a>
+            <div style="font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:#7c3aed;">
+                {n['category']}
+            </div>
+
+            <div style="font-family: DM Serif Display, serif; font-size:16px; color:#1e1b4b;">
+                {n['title']}
+            </div>
+
+            <div style="font-size:13px; color:#475569;">
+                {n['summary']}
+            </div>
+
+            <a href="{n['link']}" target="_blank"
+               style="font-size:11px; color:#4F46E5;">
+               Read more →
+            </a>
+
         </div>
         """
 
-# -----------------------------
-# FINAL HTML (UI + SEARCH + FILTER + DATE)
-# -----------------------------
+    content += """
+        </div>
+    </div>
+    """
+
+# =============================
+# FINAL HTML
+# =============================
 html = f"""
 <!DOCTYPE html>
 <html>
 <head>
-<title>Retail Intelligence Dashboard</title>
+<title>Datum Wiki · Retail Intelligence</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- GOOGLE FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Questrial&display=swap" rel="stylesheet">
+
 <style>
+
+/* =============================
+   YOUR DATUM STYLE (SIMPLIFIED CORE)
+   ============================= */
+
 body {{
-    font-family: Arial;
-    background: #0b1220;
-    color: white;
+    background: #fafaf7;
+    font-family: Questrial, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 32px 40px;
+    color: #0f172a;
 }}
 
-.header {{
-    font-size: 32px;
-    font-weight: bold;
+.masthead {{
+    background: #1e1b4b;
+    color: white;
+    padding: 14px 20px;
+    border-bottom: 4px solid #fbbf24;
+    font-family: DM Serif Display, serif;
 }}
 
-.sub {{
-    color: #94a3b8;
-    margin-bottom: 10px;
+.byline {{
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #64748b;
+    margin: 12px 0;
 }}
 
-.topbar {{
-    display: flex;
-    gap: 10px;
-    margin: 15px 0;
-    flex-wrap: wrap;
+.kpis {{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #e7e5dd;
+    margin-bottom: 20px;
 }}
 
-input, select {{
-    padding: 8px;
-    border-radius: 6px;
-    border: none;
-}}
-
-.list {{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}}
-
-.card {{
-    background: #111c33;
+.kpi {{
+    background: white;
     padding: 14px;
-    border-radius: 12px;
-    border: 1px solid #1f2a44;
-    display: flex;
-    flex-direction: column;
 }}
 
-.card:hover {{
-    transform: translateY(-3px);
+.kpi .val {{
+    font-family: DM Serif Display;
+    font-size: 24px;
+    color: #1e1b4b;
 }}
 
-.tag {{
-    font-size: 12px;
-    color: #60a5fa;
-    margin-bottom: 6px;
+.section-head {{
+    margin-top: 30px;
+    border-top: 2px solid #1e1b4b;
+    padding-top: 10px;
 }}
 
-.date-header {{
-    margin-top: 25px;
-    border-left: 4px solid #60a5fa;
-    padding-left: 10px;
+.section-num {{
+    font-family: DM Serif Display;
+    font-size: 20px;
+    color: #7c3aed;
 }}
 
-h3 {{
-    margin: 6px 0;
+.section-title {{
+    font-family: DM Serif Display;
+    font-size: 22px;
+    color: #1e1b4b;
 }}
 
-p {{
+.section-lede {{
     font-size: 13px;
-    color: #cbd5e1;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: #475569;
+}}
+
+.ex {{
+    background: white;
+    border: 1px solid #e7e5dd;
+    margin-top: 10px;
+}}
+
+.ex-head {{
+    padding: 10px;
+    border-bottom: 1px solid #e7e5dd;
+}}
+
+.ex-body {{
+    padding: 14px;
+}}
+
+.ex-num {{
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #7c3aed;
+}}
+
+.ex-cap {{
+    font-family: DM Serif Display;
+    font-size: 14px;
+    color: #1e1b4b;
 }}
 
 a {{
-    color: #60a5fa;
-    margin-top: auto;
+    color: #4F46E5;
+    text-decoration: none;
 }}
+
 </style>
+
 </head>
 
 <body>
 
-<div class="header">Retail Intelligence Dashboard</div>
-<div class="sub">Last updated: {last_updated}</div>
-
-<!-- ================= TOP BAR (SEARCH + FILTER) ================= -->
-<div class="topbar">
-    <input type="text" id="search" placeholder="Search news...">
-    
-    <select id="category">
-        <option value="all">All Categories</option>
-        <option value="Retail">Retail</option>
-        <option value="Ecommerce">Ecommerce</option>
-        <option value="FMCG">FMCG</option>
-        <option value="Quick Commerce">Quick Commerce</option>
-        <option value="Startups / Funding">Startups</option>
-        <option value="Business / Tech">Business</option>
-    </select>
-
-    <input type="date" id="start">
-    <input type="date" id="end">
+<div class="masthead">
+    DATUM WIKI · Retail Intelligence Dashboard
 </div>
 
-<!-- ================= LIST VIEW ================= -->
-<div class="list">
-{news_cards}
+<div class="byline">
+    Last updated: {last_updated}
 </div>
 
-<!-- ================= JS FILTER SYSTEM ================= -->
-<script>
-const search = document.getElementById("search");
-const category = document.getElementById("category");
-const start = document.getElementById("start");
-const end = document.getElementById("end");
+<div class="kpis">
+    <div class="kpi"><div>Total News</div><div class="val">{len(unique_news)}</div></div>
+    <div class="kpi"><div>Days Covered</div><div class="val">{len(grouped)}</div></div>
+    <div class="kpi"><div>System</div><div class="val">Live RSS</div></div>
+</div>
 
-function filterNews() {{
-    const s = search.value.toLowerCase();
-    const c = category.value;
-    const sd = start.value;
-    const ed = end.value;
-
-    document.querySelectorAll(".card").forEach(card => {{
-        const title = card.dataset.title.toLowerCase();
-        const cat = card.dataset.category;
-        const date = card.dataset.date;
-
-        let show = true;
-
-        if (s && !title.includes(s)) show = false;
-        if (c !== "all" && cat !== c) show = false;
-        if (sd && date < sd) show = false;
-        if (ed && date > ed) show = false;
-
-        card.style.display = show ? "block" : "none";
-    }});
-}}
-
-search.addEventListener("input", filterNews);
-category.addEventListener("change", filterNews);
-start.addEventListener("change", filterNews);
-end.addEventListener("change", filterNews);
-</script>
+{content}
 
 </body>
 </html>
 """
 
-# -----------------------------
-# WRITE FILE
-# -----------------------------
+# =============================
+# WRITE OUTPUT
+# =============================
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
