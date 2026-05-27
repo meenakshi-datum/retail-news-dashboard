@@ -1,6 +1,7 @@
 import feedparser
 from datetime import datetime
 import re
+from collections import defaultdict
 
 # -----------------------------
 # RSS SOURCES
@@ -41,7 +42,7 @@ def get_category(title):
         return "Business / Tech"
 
 # -----------------------------
-# COLLECT NEWS
+# COLLECT ALL NEWS
 # -----------------------------
 all_news = []
 
@@ -49,10 +50,15 @@ for url in feeds:
     feed = feedparser.parse(url)
 
     for entry in feed.entries[:8]:
+
+        summary = entry.get("summary", "")
+        summary = re.sub("<.*?>", "", summary)
+
         all_news.append({
             "title": entry.title,
             "link": entry.link,
-            "summary": entry.get("summary", "")
+            "summary": summary,
+            "date": datetime.now().strftime("%Y-%m-%d")
         })
 
 # -----------------------------
@@ -67,29 +73,48 @@ for n in all_news:
         seen.add(n["title"])
 
 # -----------------------------
-# BUILD CARDS
+# GROUP BY DATE
+# -----------------------------
+grouped_news = defaultdict(list)
+
+for n in unique_news:
+    grouped_news[n["date"]].append(n)
+
+# -----------------------------
+# BUILD DATE-WISE CARDS
 # -----------------------------
 news_cards = ""
 
-for n in unique_news:
-
-    category = get_category(n["title"])
-
-    # CLEAN SUMMARY (IMPORTANT FIX)
-    summary = re.sub("<.*?>", "", n["summary"])
-    summary = summary[:180]
-
-    if not summary:
-        summary = "No summary available."
+for date in sorted(grouped_news.keys(), reverse=True):
 
     news_cards += f"""
-    <div class="card">
-        <div class="tag">{category}</div>
-        <h3>{n["title"]}</h3>
-        <p>{summary}</p>
-        <a href="{n["link"]}" target="_blank">Read more →</a>
-    </div>
+    <h2 style="
+        margin-top:30px;
+        margin-bottom:10px;
+        color:#ffffff;
+        border-left:4px solid #60a5fa;
+        padding-left:10px;
+    ">
+        {date}
+    </h2>
     """
+
+    for n in grouped_news[date]:
+
+        category = get_category(n["title"])
+        summary = n["summary"][:180]
+
+        if not summary:
+            summary = "No summary available."
+
+        news_cards += f"""
+        <div class="card">
+            <div class="tag">{category}</div>
+            <h3>{n["title"]}</h3>
+            <p>{summary}</p>
+            <a href="{n["link"]}" target="_blank">Read more →</a>
+        </div>
+        """
 
 # -----------------------------
 # LAST UPDATED
@@ -97,7 +122,7 @@ for n in unique_news:
 last_updated = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 # -----------------------------
-# HTML + FIXED CSS (IMPORTANT SECTION)
+# HTML + CSS
 # -----------------------------
 html = f"""
 <!DOCTYPE html>
@@ -124,7 +149,7 @@ body {{
 
 .sub {{
     color: #94a3b8;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }}
 
 .grid {{
@@ -139,10 +164,8 @@ body {{
     padding: 16px;
     border-radius: 14px;
     border: 1px solid #1f2a44;
-
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     min-height: 180px;
 }}
 
@@ -160,14 +183,12 @@ body {{
 h3 {{
     font-size: 15px;
     margin: 8px 0;
-    line-height: 1.4;
 }}
 
 p {{
     font-size: 13px;
     color: #cbd5e1;
     line-height: 1.4;
-
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -190,7 +211,7 @@ a:hover {{
 <body>
 
 <div class="header">Retail Intelligence Dashboard</div>
-<div class="sub">Auto-generated retail & ecommerce insights</div>
+<div class="sub">Date-wise structured retail & ecommerce intelligence feed</div>
 <div class="sub">Last updated: {last_updated}</div>
 
 <div class="grid">
@@ -202,7 +223,7 @@ a:hover {{
 """
 
 # -----------------------------
-# WRITE OUTPUT
+# WRITE FILE
 # -----------------------------
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
