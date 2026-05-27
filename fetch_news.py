@@ -1,7 +1,6 @@
 import feedparser
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import re
-import time
 from collections import defaultdict
 
 # -----------------------------
@@ -43,20 +42,10 @@ def get_category(title):
         return "Business / Tech"
 
 # -----------------------------
-# CLEAN DATE FUNCTION (IMPORTANT FIX)
+# IST TIME
 # -----------------------------
-def clean_date(date_str):
-    if not date_str:
-        return datetime.now().strftime("%Y-%m-%d")
-
-    try:
-        # RSS format: Wed, 27 May 2026 10:15:00 GMT
-        return time.strftime("%Y-%m-%d", time.strptime(date_str[:25], "%a, %d %b %Y"))
-    except:
-        try:
-            return datetime.strptime(date_str[:10], "%Y-%m-%d").strftime("%Y-%m-%d")
-        except:
-            return datetime.now().strftime("%Y-%m-%d")
+ist = timezone(timedelta(hours=5, minutes=30))
+last_updated = datetime.now(ist).strftime("%Y-%m-%d %H:%M IST")
 
 # -----------------------------
 # COLLECT NEWS
@@ -71,12 +60,17 @@ for url in feeds:
         summary = re.sub("<.*?>", "", entry.get("summary", ""))
 
         raw_date = entry.get("published") or entry.get("updated") or ""
+        try:
+            clean_date = time.strftime("%Y-%m-%d", time.strptime(raw_date[:25], "%a, %d %b %Y"))
+        except:
+            clean_date = datetime.now(ist).strftime("%Y-%m-%d")
 
         all_news.append({
             "title": entry.title,
             "link": entry.link,
-            "summary": summary,
-            "date": clean_date(raw_date)
+            "summary": summary[:180],
+            "date": clean_date,
+            "category": get_category(entry.title)
         })
 
 # -----------------------------
@@ -93,54 +87,41 @@ for n in all_news:
 # -----------------------------
 # GROUP BY DATE
 # -----------------------------
-grouped_news = defaultdict(list)
+grouped = defaultdict(list)
+date_summary = {}
 
 for n in unique_news:
-    grouped_news[n["date"]].append(n)
+    grouped[n["date"]].append(n)
+    date_summary[n["date"]] = date_summary.get(n["date"], 0) + 1
 
 # -----------------------------
-# BUILD HTML CARDS
+# BUILD LIST VIEW CARDS
 # -----------------------------
 news_cards = ""
 
-for date in sorted(grouped_news.keys(), reverse=True):
+for date in sorted(grouped.keys(), reverse=True):
 
     news_cards += f"""
-    <h2 style="
-        margin-top:30px;
-        margin-bottom:10px;
-        color:#ffffff;
-        border-left:4px solid #60a5fa;
-        padding-left:10px;
-    ">
-        {date}
-    </h2>
+    <h2 class="date-header">{date} ({date_summary[date]} news)</h2>
     """
 
-    for n in grouped_news[date]:
-
-        category = get_category(n["title"])
-        summary = n["summary"][:180]
-
-        if not summary:
-            summary = "No summary available."
+    for n in grouped[date]:
 
         news_cards += f"""
-        <div class="card">
-            <div class="tag">{category}</div>
-            <h3>{n["title"]}</h3>
-            <p>{summary}</p>
-            <a href="{n["link"]}" target="_blank">Read more →</a>
+        <div class="card"
+             data-title="{n['title']}"
+             data-category="{n['category']}"
+             data-date="{n['date']}">
+
+            <div class="tag">{n['category']}</div>
+            <h3>{n['title']}</h3>
+            <p>{n['summary']}</p>
+            <a href="{n['link']}" target="_blank">Read more →</a>
         </div>
         """
 
 # -----------------------------
-# LAST UPDATED
-# -----------------------------
-last_updated = datetime.now().strftime("%Y-%m-%d %H:%M")
-
-# -----------------------------
-# FINAL HTML
+# FINAL HTML (UI + SEARCH + FILTER + DATE)
 # -----------------------------
 html = f"""
 <!DOCTYPE html>
@@ -162,7 +143,6 @@ body {{
 .header {{
     font-size: 32px;
     font-weight: bold;
-    margin-bottom: 5px;
 }}
 
 .sub {{
@@ -170,78 +150,139 @@ body {{
     margin-bottom: 10px;
 }}
 
-.grid {{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
-    align-items: start;
+.topbar {{
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}}
+
+input, select {{
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+}}
+
+.list {{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }}
 
 .card {{
     background: #111c33;
-    padding: 16px;
-    border-radius: 14px;
+    padding: 14px;
+    border-radius: 12px;
     border: 1px solid #1f2a44;
     display: flex;
     flex-direction: column;
-    min-height: 180px;
 }}
 
 .card:hover {{
-    transform: translateY(-4px);
-    transition: 0.2s;
+    transform: translateY(-3px);
 }}
 
 .tag {{
     font-size: 12px;
     color: #60a5fa;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+}}
+
+.date-header {{
+    margin-top: 25px;
+    border-left: 4px solid #60a5fa;
+    padding-left: 10px;
 }}
 
 h3 {{
-    font-size: 15px;
-    margin: 8px 0;
+    margin: 6px 0;
 }}
 
 p {{
     font-size: 13px;
     color: #cbd5e1;
-    line-height: 1.4;
-    overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
+    overflow: hidden;
 }}
 
 a {{
-    margin-top: auto;
     color: #60a5fa;
-    text-decoration: none;
-}}
-
-a:hover {{
-    text-decoration: underline;
+    margin-top: auto;
 }}
 </style>
-
 </head>
 
 <body>
 
 <div class="header">Retail Intelligence Dashboard</div>
-<div class="sub">Date-wise structured retail & ecommerce feed</div>
 <div class="sub">Last updated: {last_updated}</div>
 
-<div class="grid">
+<!-- ================= TOP BAR (SEARCH + FILTER) ================= -->
+<div class="topbar">
+    <input type="text" id="search" placeholder="Search news...">
+    
+    <select id="category">
+        <option value="all">All Categories</option>
+        <option value="Retail">Retail</option>
+        <option value="Ecommerce">Ecommerce</option>
+        <option value="FMCG">FMCG</option>
+        <option value="Quick Commerce">Quick Commerce</option>
+        <option value="Startups / Funding">Startups</option>
+        <option value="Business / Tech">Business</option>
+    </select>
+
+    <input type="date" id="start">
+    <input type="date" id="end">
+</div>
+
+<!-- ================= LIST VIEW ================= -->
+<div class="list">
 {news_cards}
 </div>
+
+<!-- ================= JS FILTER SYSTEM ================= -->
+<script>
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+const start = document.getElementById("start");
+const end = document.getElementById("end");
+
+function filterNews() {{
+    const s = search.value.toLowerCase();
+    const c = category.value;
+    const sd = start.value;
+    const ed = end.value;
+
+    document.querySelectorAll(".card").forEach(card => {{
+        const title = card.dataset.title.toLowerCase();
+        const cat = card.dataset.category;
+        const date = card.dataset.date;
+
+        let show = true;
+
+        if (s && !title.includes(s)) show = false;
+        if (c !== "all" && cat !== c) show = false;
+        if (sd && date < sd) show = false;
+        if (ed && date > ed) show = false;
+
+        card.style.display = show ? "block" : "none";
+    }});
+}}
+
+search.addEventListener("input", filterNews);
+category.addEventListener("change", filterNews);
+start.addEventListener("change", filterNews);
+end.addEventListener("change", filterNews);
+</script>
 
 </body>
 </html>
 """
 
 # -----------------------------
-# WRITE OUTPUT
+# WRITE FILE
 # -----------------------------
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
