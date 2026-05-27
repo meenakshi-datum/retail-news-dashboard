@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 
 # =============================
-# RSS SOURCES
+# RSS FEEDS
 # =============================
 feeds = [
     "https://retail.economictimes.indiatimes.com/rss/topstories",
@@ -16,7 +16,7 @@ feeds = [
 ]
 
 # =============================
-# CATEGORY FUNCTION
+# CATEGORY SYSTEM
 # =============================
 def get_category(title):
     title = title.lower()
@@ -24,13 +24,13 @@ def get_category(title):
     if any(x in title for x in ["blinkit", "zepto", "swiggy", "quick commerce"]):
         return "Quick Commerce"
 
-    if any(x in title for x in ["amazon", "flipkart", "ecommerce"]):
+    if any(x in title for x in ["amazon", "flipkart", "ecommerce", "e-commerce"]):
         return "Ecommerce"
 
     if any(x in title for x in ["fmcg", "nestle", "dabur"]):
         return "FMCG"
 
-    if any(x in title for x in ["startup", "funding", "raise", "acquire"]):
+    if any(x in title for x in ["startup", "funding", "acquire", "merge"]):
         return "Startups"
 
     return "Retail / Business"
@@ -51,12 +51,12 @@ def clean_date(date_str):
         return datetime.now().strftime("%Y-%m-%d")
 
 # =============================
-# COLLECT NEWS
+# FETCH NEWS
 # =============================
 news = []
 
-for feed_url in feeds:
-    feed = feedparser.parse(feed_url)
+for url in feeds:
+    feed = feedparser.parse(url)
 
     for e in feed.entries[:8]:
 
@@ -90,49 +90,71 @@ for n in unique:
     grouped[n["date"]].append(n)
 
 # =============================
-# DAILY SUMMARY ENGINE
+# FINAL BUILD (INTELLIGENCE LAYER)
 # =============================
-def summary(day_news):
-    cats = {}
-    words = {}
-
-    for n in day_news:
-        cats[n["category"]] = cats.get(n["category"], 0) + 1
-        for w in n["title"].split():
-            if len(w) > 4:
-                words[w.lower()] = words.get(w.lower(), 0) + 1
-
-    top_cat = sorted(cats.items(), key=lambda x: x[1], reverse=True)[:3]
-    top_words = sorted(words.items(), key=lambda x: x[1], reverse=True)[:5]
-
-    return "Top sectors: " + ", ".join([c[0] for c in top_cat]) + " | Trending: " + ", ".join([w[0] for w in top_words])
-
-# =============================
-# BUILD HTML ITEMS (LIST VIEW ONLY)
-# =============================
-items = ""
+html_items = ""
 
 for date in sorted(grouped.keys(), reverse=True):
 
     day_news = grouped[date]
-    day_summary = summary(day_news)
+
+    # -----------------------------
+    # INSIGHT ENGINE (FIXED)
+    # -----------------------------
+    cat_count = {}
+    word_count = {}
 
     for n in day_news:
+        cat_count[n["category"]] = cat_count.get(n["category"], 0) + 1
 
-        items += f"""
+        for w in n["title"].split():
+            if len(w) > 4:
+                word_count[w.lower()] = word_count.get(w.lower(), 0) + 1
+
+    top_cat = sorted(cat_count.items(), key=lambda x: x[1], reverse=True)[:2]
+    top_words = sorted(word_count.items(), key=lambda x: x[1], reverse=True)[:5]
+
+    insight = f"""
+    Dominant sectors: {", ".join([c[0] for c in top_cat])}
+    Trending themes: {", ".join([w[0] for w in top_words])}
+    """
+
+    # -----------------------------
+    # DATE SECTION
+    # -----------------------------
+    html_items += f"""
+    <div class="day-section">
+
+        <div class="date-header">📅 {date}</div>
+
+        <div class="insight-box">
+            🧠 <b>Today’s Intelligence</b><br>
+            {insight}
+        </div>
+    """
+
+    # -----------------------------
+    # NEWS LIST
+    # -----------------------------
+    for n in day_news:
+
+        html_items += f"""
         <div class="item"
              data-date="{date}"
              data-category="{n['category']}">
 
-            <div class="meta">{date} · {n['category']}</div>
+            <div class="meta">{n['category']}</div>
 
             <div class="title">{n['title']}</div>
 
             <div class="desc">{n['summary']}</div>
 
             <a href="{n['link']}" target="_blank">Read →</a>
+
         </div>
         """
+
+    html_items += "</div>"
 
 # =============================
 # FINAL HTML
@@ -141,11 +163,9 @@ html = f"""
 <!DOCTYPE html>
 <html>
 <head>
-<title>Retail Intelligence</title>
+<title>Retail Intelligence Dashboard</title>
 
 <style>
-
-/* ================= UI ================= */
 
 body {{
     font-family: Arial;
@@ -160,14 +180,15 @@ body {{
 }}
 
 .sub {{
-    color: #666;
     font-size: 12px;
+    color: #666;
 }}
 
 .controls {{
     display: flex;
     gap: 10px;
     margin: 15px 0;
+    flex-wrap: wrap;
 }}
 
 input, select {{
@@ -175,11 +196,29 @@ input, select {{
     font-size: 12px;
 }}
 
+.day-section {{
+    margin-bottom: 25px;
+}}
+
+.date-header {{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}}
+
+.insight-box {{
+    background: #eef2ff;
+    border-left: 4px solid #4f46e5;
+    padding: 10px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}}
+
 .item {{
     background: white;
-    padding: 12px;
-    margin-bottom: 10px;
     border: 1px solid #ddd;
+    padding: 12px;
+    margin-bottom: 8px;
 }}
 
 .meta {{
@@ -188,7 +227,7 @@ input, select {{
 }}
 
 .title {{
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
 }}
 
@@ -203,6 +242,7 @@ a {{
 }}
 
 </style>
+
 </head>
 
 <body>
@@ -217,11 +257,11 @@ a {{
 
 <select id="category">
     <option value="">All Categories</option>
-    <option>Retail / Business</option>
     <option>Quick Commerce</option>
     <option>Ecommerce</option>
     <option>FMCG</option>
     <option>Startups</option>
+    <option>Retail / Business</option>
 </select>
 
 <input type="date" id="fromDate">
@@ -229,14 +269,13 @@ a {{
 
 </div>
 
-<!-- LIST -->
+<!-- CONTENT -->
 <div id="list">
-{items}
+{html_items}
 </div>
 
 <script>
 
-// ================= SEARCH =================
 document.getElementById("search").addEventListener("input", filter);
 document.getElementById("category").addEventListener("change", filter);
 document.getElementById("fromDate").addEventListener("change", filter);
@@ -274,7 +313,7 @@ function filter() {{
 """
 
 # =============================
-# SAVE
+# SAVE FILE
 # =============================
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
