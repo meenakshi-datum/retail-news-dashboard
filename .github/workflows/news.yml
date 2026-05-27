@@ -1,34 +1,47 @@
-name: Retail News Pipeline
+name: Retail Intelligence Pipeline
 
 on:
   schedule:
-    - cron: '30 3 * * *'   # 9:00 AM IST
-    - cron: '30 13 * * *'  # 7:00 PM IST
+
+    # 9:00 AM IST
+    - cron: '30 3 * * *'
+
+    # 7:00 PM IST
+    - cron: '30 13 * * *'
 
   workflow_dispatch:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v4
+
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install
+      - name: Install Dependencies
         run: pip install feedparser
 
-      - name: Run
+      - name: Run News Engine
         run: python fetch_news.py
 
-      - name: Commit
+      - name: Commit Files
         run: |
           git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.email "actions@github.com"
+
           git add .
-          git commit -m "update" || echo "no changes"
+
+          git commit -m "Retail intelligence update" || echo "No changes"
+
           git push
