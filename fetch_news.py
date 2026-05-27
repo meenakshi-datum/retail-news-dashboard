@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 
 # =============================
-# RSS FEEDS
+# RSS SOURCES
 # =============================
 feeds = [
     "https://retail.economictimes.indiatimes.com/rss/topstories",
@@ -16,21 +16,21 @@ feeds = [
 ]
 
 # =============================
-# CATEGORY SYSTEM
+# CATEGORY ENGINE
 # =============================
 def get_category(title):
-    title = title.lower()
+    t = title.lower()
 
-    if any(x in title for x in ["blinkit", "zepto", "swiggy", "quick commerce"]):
+    if any(x in t for x in ["blinkit", "zepto", "swiggy", "quick commerce"]):
         return "Quick Commerce"
 
-    if any(x in title for x in ["amazon", "flipkart", "ecommerce", "e-commerce"]):
+    if any(x in t for x in ["amazon", "flipkart", "ecommerce"]):
         return "Ecommerce"
 
-    if any(x in title for x in ["fmcg", "nestle", "dabur"]):
+    if any(x in t for x in ["fmcg", "nestle", "dabur"]):
         return "FMCG"
 
-    if any(x in title for x in ["startup", "funding", "acquire", "merge"]):
+    if any(x in t for x in ["startup", "funding", "acquire", "merge"]):
         return "Startups"
 
     return "Retail / Business"
@@ -65,7 +65,7 @@ for url in feeds:
         news.append({
             "title": e.title,
             "link": e.link,
-            "summary": summary[:150],
+            "summary": summary[:160],
             "date": clean_date(e.get("published", "")),
             "category": get_category(e.title)
         })
@@ -90,55 +90,83 @@ for n in unique:
     grouped[n["date"]].append(n)
 
 # =============================
-# FINAL BUILD (INTELLIGENCE LAYER)
+# LEVEL 2 AI ANALYST ENGINE
 # =============================
-html_items = ""
+def generate_ai_insight(day_news):
+
+    cat_count = {}
+    keyword_count = {}
+
+    for n in day_news:
+
+        cat_count[n["category"]] = cat_count.get(n["category"], 0) + 1
+
+        for w in n["title"].lower().split():
+            if len(w) > 4:
+                keyword_count[w] = keyword_count.get(w, 0) + 1
+
+    top_categories = sorted(cat_count.items(), key=lambda x: x[1], reverse=True)[:3]
+    top_keywords = sorted(keyword_count.items(), key=lambda x: x[1], reverse=True)[:6]
+
+    dominant = top_categories[0][0] if top_categories else "Mixed Market"
+
+    trend_words = ", ".join([k[0] for k in top_keywords[:5]])
+
+    narrative = ""
+
+    if cat_count.get("Quick Commerce", 0) >= 2:
+        narrative += "Quick commerce is showing strong expansion + delivery + funding activity. "
+
+    if cat_count.get("Ecommerce", 0) >= 2:
+        narrative += "E-commerce platforms show steady marketplace movement. "
+
+    if cat_count.get("Startups", 0) >= 2:
+        narrative += "Startup ecosystem shows funding/acquisition momentum. "
+
+    if cat_count.get("FMCG", 0) >= 1:
+        narrative += "FMCG remains stable with brand-level updates. "
+
+    return f"""
+📊 Market Overview:
+{narrative}
+
+🧠 Dominant Sector: {dominant}
+
+🔥 Emerging Themes: {trend_words}
+
+⚠️ Interpretation:
+Market attention is concentrated around {dominant.lower()}-driven activity,
+with repeated signals indicating short-term momentum formation.
+
+💡 So What:
+This suggests shifting retail intelligence focus toward {dominant.lower()} ecosystem developments.
+"""
+
+# =============================
+# BUILD HTML CONTENT
+# =============================
+content = ""
 
 for date in sorted(grouped.keys(), reverse=True):
 
     day_news = grouped[date]
 
-    # -----------------------------
-    # INSIGHT ENGINE (FIXED)
-    # -----------------------------
-    cat_count = {}
-    word_count = {}
+    insight = generate_ai_insight(day_news)
 
-    for n in day_news:
-        cat_count[n["category"]] = cat_count.get(n["category"], 0) + 1
-
-        for w in n["title"].split():
-            if len(w) > 4:
-                word_count[w.lower()] = word_count.get(w.lower(), 0) + 1
-
-    top_cat = sorted(cat_count.items(), key=lambda x: x[1], reverse=True)[:2]
-    top_words = sorted(word_count.items(), key=lambda x: x[1], reverse=True)[:5]
-
-    insight = f"""
-    Dominant sectors: {", ".join([c[0] for c in top_cat])}
-    Trending themes: {", ".join([w[0] for w in top_words])}
-    """
-
-    # -----------------------------
-    # DATE SECTION
-    # -----------------------------
-    html_items += f"""
+    content += f"""
     <div class="day-section">
 
         <div class="date-header">📅 {date}</div>
 
         <div class="insight-box">
-            🧠 <b>Today’s Intelligence</b><br>
+            🧠 <b>AI Analyst Insight</b><br>
             {insight}
         </div>
     """
 
-    # -----------------------------
-    # NEWS LIST
-    # -----------------------------
     for n in day_news:
 
-        html_items += f"""
+        content += f"""
         <div class="item"
              data-date="{date}"
              data-category="{n['category']}">
@@ -150,11 +178,10 @@ for date in sorted(grouped.keys(), reverse=True):
             <div class="desc">{n['summary']}</div>
 
             <a href="{n['link']}" target="_blank">Read →</a>
-
         </div>
         """
 
-    html_items += "</div>"
+    content += "</div>"
 
 # =============================
 # FINAL HTML
@@ -163,7 +190,7 @@ html = f"""
 <!DOCTYPE html>
 <html>
 <head>
-<title>Retail Intelligence Dashboard</title>
+<title>Retail Intelligence Dashboard - Level 2</title>
 
 <style>
 
@@ -212,6 +239,7 @@ input, select {{
     padding: 10px;
     font-size: 12px;
     margin-bottom: 10px;
+    white-space: pre-line;
 }}
 
 .item {{
@@ -247,7 +275,7 @@ a {{
 
 <body>
 
-<div class="header">Retail Intelligence Dashboard</div>
+<div class="header">Retail Intelligence Dashboard - Level 2</div>
 <div class="sub">Last Updated: {now_ist}</div>
 
 <!-- CONTROLS -->
@@ -269,9 +297,8 @@ a {{
 
 </div>
 
-<!-- CONTENT -->
 <div id="list">
-{html_items}
+{content}
 </div>
 
 <script>
