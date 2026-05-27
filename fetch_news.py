@@ -1,6 +1,7 @@
 import feedparser
 from datetime import datetime
 import re
+import time
 from collections import defaultdict
 
 # -----------------------------
@@ -42,7 +43,23 @@ def get_category(title):
         return "Business / Tech"
 
 # -----------------------------
-# COLLECT ALL NEWS
+# CLEAN DATE FUNCTION (IMPORTANT FIX)
+# -----------------------------
+def clean_date(date_str):
+    if not date_str:
+        return datetime.now().strftime("%Y-%m-%d")
+
+    try:
+        # RSS format: Wed, 27 May 2026 10:15:00 GMT
+        return time.strftime("%Y-%m-%d", time.strptime(date_str[:25], "%a, %d %b %Y"))
+    except:
+        try:
+            return datetime.strptime(date_str[:10], "%Y-%m-%d").strftime("%Y-%m-%d")
+        except:
+            return datetime.now().strftime("%Y-%m-%d")
+
+# -----------------------------
+# COLLECT NEWS
 # -----------------------------
 all_news = []
 
@@ -51,14 +68,15 @@ for url in feeds:
 
     for entry in feed.entries[:8]:
 
-        summary = entry.get("summary", "")
-        summary = re.sub("<.*?>", "", summary)
+        summary = re.sub("<.*?>", "", entry.get("summary", ""))
+
+        raw_date = entry.get("published") or entry.get("updated") or ""
 
         all_news.append({
             "title": entry.title,
             "link": entry.link,
             "summary": summary,
-            "date": datetime.now().strftime("%Y-%m-%d")
+            "date": clean_date(raw_date)
         })
 
 # -----------------------------
@@ -81,7 +99,7 @@ for n in unique_news:
     grouped_news[n["date"]].append(n)
 
 # -----------------------------
-# BUILD DATE-WISE CARDS
+# BUILD HTML CARDS
 # -----------------------------
 news_cards = ""
 
@@ -122,7 +140,7 @@ for date in sorted(grouped_news.keys(), reverse=True):
 last_updated = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 # -----------------------------
-# HTML + CSS
+# FINAL HTML
 # -----------------------------
 html = f"""
 <!DOCTYPE html>
@@ -211,7 +229,7 @@ a:hover {{
 <body>
 
 <div class="header">Retail Intelligence Dashboard</div>
-<div class="sub">Date-wise structured retail & ecommerce intelligence feed</div>
+<div class="sub">Date-wise structured retail & ecommerce feed</div>
 <div class="sub">Last updated: {last_updated}</div>
 
 <div class="grid">
@@ -223,7 +241,7 @@ a:hover {{
 """
 
 # -----------------------------
-# WRITE FILE
+# WRITE OUTPUT
 # -----------------------------
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
