@@ -30,7 +30,7 @@ def get_category(title):
     if any(x in t for x in ["fmcg", "nestle", "dabur"]):
         return "FMCG"
 
-    if any(x in t for x in ["startup", "funding", "acquire", "merge"]):
+    if any(x in t for x in ["startup", "funding", "acquire", "merge", "raises"]):
         return "Startups"
 
     return "Retail / Business"
@@ -51,14 +51,23 @@ def clean_date(date_str):
         return datetime.now().strftime("%Y-%m-%d")
 
 # =============================
-# FETCH NEWS
+# NORMALIZE TITLE (IMPORTANT FIX)
+# =============================
+def normalize_title(t):
+    return " ".join(t.lower().split())
+
+# =============================
+# FETCH NEWS (FIXED LIMIT + NO OVER-CUTTING)
 # =============================
 news = []
 
 for url in feeds:
+
     feed = feedparser.parse(url)
 
-    for e in feed.entries[:8]:
+    # ❌ OLD: [:8]
+    # ✅ FIX: allow more coverage
+    for e in feed.entries[:20]:
 
         summary = re.sub("<.*?>", "", e.get("summary", ""))
 
@@ -71,15 +80,23 @@ for url in feeds:
         })
 
 # =============================
-# REMOVE DUPLICATES
+# SMART DEDUP (FIXED)
 # =============================
 seen = set()
 unique = []
 
+MAX_NEWS = 250  # prevent explosion but keep high coverage
+
 for n in news:
-    if n["title"] not in seen:
+
+    key = normalize_title(n["title"])
+
+    if key not in seen:
+        seen.add(key)
         unique.append(n)
-        seen.add(n["title"])
+
+    if len(unique) >= MAX_NEWS:
+        break
 
 # =============================
 # GROUP BY DATE
@@ -109,22 +126,21 @@ def generate_ai_insight(day_news):
     top_keywords = sorted(keyword_count.items(), key=lambda x: x[1], reverse=True)[:6]
 
     dominant = top_categories[0][0] if top_categories else "Mixed Market"
-
-    trend_words = ", ".join([k[0] for k in top_keywords[:5]])
+    trends = ", ".join([k[0] for k in top_keywords[:5]])
 
     narrative = ""
 
     if cat_count.get("Quick Commerce", 0) >= 2:
-        narrative += "Quick commerce is showing strong expansion + delivery + funding activity. "
+        narrative += "Quick commerce shows strong momentum with delivery + funding activity. "
 
     if cat_count.get("Ecommerce", 0) >= 2:
-        narrative += "E-commerce platforms show steady marketplace movement. "
+        narrative += "Ecommerce platforms remain active with marketplace developments. "
 
     if cat_count.get("Startups", 0) >= 2:
         narrative += "Startup ecosystem shows funding/acquisition momentum. "
 
     if cat_count.get("FMCG", 0) >= 1:
-        narrative += "FMCG remains stable with brand-level updates. "
+        narrative += "FMCG remains stable with brand activity. "
 
     return f"""
 📊 Market Overview:
@@ -132,18 +148,18 @@ def generate_ai_insight(day_news):
 
 🧠 Dominant Sector: {dominant}
 
-🔥 Emerging Themes: {trend_words}
+🔥 Emerging Themes: {trends}
 
 ⚠️ Interpretation:
-Market attention is concentrated around {dominant.lower()}-driven activity,
-with repeated signals indicating short-term momentum formation.
+Market attention is concentrated around {dominant.lower()} activity,
+with repeated signals indicating momentum formation.
 
 💡 So What:
-This suggests shifting retail intelligence focus toward {dominant.lower()} ecosystem developments.
+This suggests increasing importance of {dominant.lower()} in retail intelligence tracking.
 """
 
 # =============================
-# BUILD HTML CONTENT
+# BUILD HTML (LIST + INTELLIGENCE)
 # =============================
 content = ""
 
@@ -190,7 +206,7 @@ html = f"""
 <!DOCTYPE html>
 <html>
 <head>
-<title>Retail Intelligence Dashboard - Level 2</title>
+<title>Retail Intelligence Dashboard - Fixed</title>
 
 <style>
 
@@ -275,7 +291,7 @@ a {{
 
 <body>
 
-<div class="header">Retail Intelligence Dashboard - Level 2</div>
+<div class="header">Retail Intelligence Dashboard (Fixed)</div>
 <div class="sub">Last Updated: {now_ist}</div>
 
 <!-- CONTROLS -->
@@ -340,7 +356,7 @@ function filter() {{
 """
 
 # =============================
-# SAVE FILE
+# SAVE OUTPUT
 # =============================
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
