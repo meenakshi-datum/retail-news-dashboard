@@ -22,11 +22,23 @@ body {
     color: #666;
 }
 
-.day {
+.controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+input, select {
+    padding: 8px;
+    font-size: 12px;
+}
+
+.day-section {
     margin-bottom: 30px;
 }
 
-.date {
+.date-header {
     font-size: 18px;
     font-weight: bold;
 }
@@ -37,6 +49,7 @@ body {
     padding: 10px;
     font-size: 12px;
     margin: 10px 0;
+    white-space: pre-line;
 }
 
 .item {
@@ -46,7 +59,7 @@ body {
     margin-bottom: 8px;
 }
 
-.cat {
+.meta {
     font-size: 10px;
     color: #666;
 }
@@ -72,805 +85,1060 @@ a {
 <body>
 
 <div class="header">Retail Intelligence Dashboard</div>
-<div class="sub">Last Updated: 2026-05-27 15:39 IST</div>
+<div class="sub">Last Updated: 2026-05-27 15:47 IST</div>
 
+<!-- CONTROLS -->
+<div class="controls">
 
-    <div class="day">
+<input id="search" placeholder="Search news...">
 
-        <div class="date">📅 2026-05-27</div>
+<select id="category">
+    <option value="">All Categories</option>
+    <option>Quick Commerce</option>
+    <option>Ecommerce</option>
+    <option>FMCG</option>
+    <option>Startups</option>
+    <option>Retail / Business</option>
+</select>
+
+<input type="date" id="fromDate">
+<input type="date" id="toDate">
+
+</div>
+
+<div id="list">
+
+    <div class="day-section">
+
+        <div class="date-header">📅 2026-05-27</div>
 
         <div class="summary-box">
             📰 <b>Daily Summary</b><br>
-            Total News: 28<br>
-            Categories: 4
+            
+Total news today: 28. The day was primarily driven by Retail / Business related developments.
+Key themes observed across the ecosystem include raveendran, singapore, court, india, still.
+Retail and digital commerce segments continued to show active movement across multiple platforms.
+Overall sentiment reflects ongoing structural activity in the Retail / Business space.
+Market attention remains concentrated on consolidated retail and startup ecosystem updates.
+
         </div>
     
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Food packs still don&#039;t tell the full story: Firms make selective label changes as FSSAI rules gather dust</div>
 
             <div class="desc">Food companies are now adding voluntary health information to some product labels. These front-of-pack declarations mention sugar, salt, and fat content. This comes as consumers de</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/food-packs-still-dont-tell-the-full-story-firms-make-selective-label-changes-as-fssai-rules-gather-dust/131341459" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Quick Commerce">
 
-            <div class="cat">Quick Commerce</div>
+            <div class="meta">Quick Commerce</div>
 
             <div class="title">Quick commerce becomes FMCG&#039;s biggest online sales channel in India</div>
 
             <div class="desc">Latest data from companies including ITC Ltd, AWL Agri Business, Tata Consumer Products and Parle Products showed quick commerce accounted for 60-75% of their total online sales in</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/quick-commerce-becomes-fmcgs-biggest-online-sales-channel-in-india/131341420" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Tata board talks: Chairman Chandra gives the floor to Tata chiefs; calm prevails</div>
 
             <div class="desc">Tata Sons board meeting saw constructive discussions. Chairman N Chandrasekaran presented business reviews. Noel Tata focused on Air India and BigBasket. Tata Electronics impressed</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/industry/tata-board-talks-chairman-chandra-gives-the-floor-to-tata-chiefs-calm-prevails/131341377" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Byju's founder Raveendran to appear in Singapore court on June 15 as he faces contempt order: ‘Appeal options available’</div>
 
             <div class="desc">Byju Raveendran, founder of Byju's, is scheduled to appear in Singapore Court on June 15 for contempt of court. He faces a six-month jail term for contempt of court linked to alleg</div>
 
             <a href="https://www.livemint.com/companies/byjus-founder-raveendran-to-appear-in-singapore-court-on-june-15-as-he-faces-contempt-order-appeal-options-available-11779871349992.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">SBI Funds starts roadshows for a  ₹13,000-crore IPO, aims launch by July</div>
 
             <div class="desc">SBI Funds Management, India’s largest asset manager, is said to be in talks with investors to raise about  ₹13,000 crore through an IPO for a likely launch in a couple of months. T</div>
 
             <a href="https://www.livemint.com/companies/sbi-funds-investors-ipo-launch-by-july-11779858146867.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Ecommerce">
 
-            <div class="cat">Ecommerce</div>
+            <div class="meta">Ecommerce</div>
 
             <div class="title">Supreme Court sets aside CCI’s  ₹202 crore penalty on Amazon in Future Coupons case</div>
 
             <div class="desc">The top court has ordered the refund of any amount deposited with interest, overturning the regulator’s action over Amazon’s 2019 Future Coupons investment and disclosure allegatio</div>
 
             <a href="https://www.livemint.com/companies/news/supreme-court-sets-aside-cci-s-202-crore-penalty-on-amazon-in-future-coupons-case-11779861339435.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">DS Group brings British chain Ben’s Cookies to India to cater to Gen Z and millennials</div>
 
             <div class="desc">DS Group partners with Ben's Cookies to launch seven stores initially in Delhi and Mumbai. The brand focuses on premium cookies and aims to cater to Gen Z and millennials seeking i</div>
 
             <a href="https://www.livemint.com/companies/news/ds-group-ben-s-cookies-india-gen-z-millennials-11779816139136.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">SBI says AI-driven banking still needs people, skills and leadership</div>
 
             <div class="desc">Chairman Challa Sreenivasulu Setty has positioned human capital at the centre of SBI’s technology overhaul even as global banks cut jobs amid AI-led restructuring.</div>
 
             <a href="https://www.livemint.com/companies/news/sbi-tech-overhaul-ai-driven-banking-human-capital-people-skills-leadership-11779853201790.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">From off-highway tyres to on-road — Balkrishna broadens its bets</div>
 
             <div class="desc">Balkrishna Industries built its business around exporting specialized off-highway tyres. Now, as tariff wars and geopolitical tensions reshape trade, it is diversifying into new se</div>
 
             <a href="https://www.livemint.com/companies/facing-an-uncertain-world-india-s-second-largest-tyre-player-is-hedging-its-bets-11779850641213.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Byju Raveendran responds to Singapore Court’s 6-month jail ruling: 'Misleading impression'</div>
 
             <div class="desc">Byju Raveendran has not just been asked to serve six months in jail, but also instructed to pay $70,500 or  ₹67,45,940.</div>
 
             <a href="https://www.livemint.com/companies/people/byju-raveendran-responds-to-singapore-court-s-6-month-jail-ruling-misleading-impression-11779857956163.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Byju Raveendran gets 6-month jail term from Singapore court in contempt case</div>
 
             <div class="desc">Byju Raveendran has not just been asked to serve six months in jail, but also instructed to pay $70,500 or  ₹67,45,940.</div>
 
             <a href="https://www.livemint.com/companies/people/byju-raveendran-gets-6-month-jail-term-from-singapore-court-in-contempt-case-11779853308432.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Startups">
 
-            <div class="cat">Startups</div>
+            <div class="meta">Startups</div>
 
             <div class="title">Startups chase GIFT City licences to win NRI investors, but will the rush last?</div>
 
             <div class="desc">Platforms are pivoting to a single regulated stack to simplify cross-border flows as market headwinds drive a defensive shift in overseas Indians' wealth. But some caution this inc</div>
 
             <a href="https://www.livemint.com/companies/start-ups/gift-city-fintech-licences-nri-investment-middle-east-11779785673715.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Himalaya Wealth launches  ₹500 crore SME fund to back manufacturing, deeptech firms</div>
 
             <div class="desc">The Category I AIF will target profitable growth-stage SMEs in sectors including aerospace, defence, industrial automation and healthcare, amid rising investor interest in manufact</div>
 
             <a href="https://www.livemint.com/companies/news/himalaya-wealth-launches-rs-500-crore-sme-aif-for-manufacturing-deeptech-firms-11779774022563.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Focusing on profitable growth: LTM CEO Venu Lambu</div>
 
             <div class="desc">LTIMindtree CEO Venu Lambu is betting on profitable growth despite AI concerns and weak investor sentiment. The company posted its fastest growth in three years and is expanding gl</div>
 
             <a href="https://www.livemint.com/companies/ltm-ceo-venu-lambu-bets-on-growth-despite-ai-fears-11779797824485.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Young buyers lift India to #3 spot for Swiss watchmaker Tissot</div>
 
             <div class="desc">Tissot chief executive Sylvain Dolla says India’s young luxury consumers are driving strong growth, pushing the country ahead of France and Switzerland for the watch brand. Tissot </div>
 
             <a href="https://www.livemint.com/companies/news/swiss-watchmaker-tissot-the-swatch-group-luxury-11779724961383.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Others open their wallets for buybacks. Cognizant turned to credit.</div>
 
             <div class="desc">In Nasdaq filings last week, the US-headquartered IT services giant said it will draw $1 billion for the buyback from a $1.85 billion revolving credit facility. Cognizant had secur</div>
 
             <a href="https://www.livemint.com/companies/cognizant-becomes-first-company-to-fund-repurchase-through-bank-borrowings-11779796772598.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Crypto Firm HTX Accused by UK of Helping Russia Move Money</div>
 
             <div class="desc">Cryptocurrency firm HTX has been sanctioned by the UK government, who allege that the exchange was part of “infrastructure” used by Russia to circumvent sanctions and helped move $</div>
 
             <a href="https://www.livemint.com/companies/crypto-firm-htx-accused-by-uk-of-helping-russia-move-money-11779820443521.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Massachusetts Uber, Lyft drivers certify first statewide ride-hailing union amid automation fears</div>
 
             <div class="desc">Massachusetts Uber, Lyft drivers certify first statewide ride-hailing union amid automation fears</div>
 
             <a href="https://www.livemint.com/companies/massachusetts-uber-lyft-drivers-certify-first-statewide-ride-hailing-union-amid-automation-fears-11779820436772.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Growth-Stage VC Firm Physis Capital Closes Maiden Fund at ₹400 Cr</div>
 
             <div class="desc">Growth-stage venture capital (VC) firm Physis Capital has announced the final close of its maiden fund at ₹400 Cr ($48&#8230;</div>
 
             <a href="https://inc42.com/buzz/growth-stage-vc-firm-physis-capital-closes-maiden-fund-at-%e2%82%b9400-cr/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Exponent Energy Cofounder Sanjay Jagannath Steps Down</div>
 
             <div class="desc">Sanjay Byalal Jagannath has exited Exponent Energy, the EV rapid-charging startup he cofounded in 2020 with Arun Vinayak, amid a&#8230;</div>
 
             <a href="https://inc42.com/buzz/exponent-energy-cofounder-sanjay-jagannath-steps-down/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Himalaya Wealth Managers Launches ₹500 Cr Fund To Back Growth Stage Deeptech SMEs</div>
 
             <div class="desc">Himalaya Wealth Managers LLP has announced the launch of a new SEBI-registered Category I alternative investment fund (AIF), Himalaya SME&#8230;</div>
 
             <a href="https://inc42.com/buzz/himalaya-wealth-managers-launches-%e2%82%b9500-cr-fund-to-back-growth-stage-deeptech-smes/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Electrical Components Manufacturer TIEA Connectors Raises ₹77 Cr</div>
 
             <div class="desc">Electrical components manufacturing startup TIEA Connectors has secured ₹77 Cr (about $8 Mn) in its Series A funding round led&#8230;</div>
 
             <a href="https://inc42.com/buzz/electrical-components-manufacturer-tiea-connectors-raises-%e2%82%b977-cr/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Unveiling The Inc42 AI Summit 2026 Agenda: Decoding Playbooks Shaping India’s AI Future</div>
 
             <div class="desc">Back in 2008, Apple popularised a simple idea — think of a use case, and “there’s an app for that”.&#8230;</div>
 
             <a href="https://inc42.com/buzz/unveiling-the-inc42-ai-summit-2026-agenda-decoding-playbooks-shaping-indias-ai-future/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">FirstCry Tumbles 7% On Q4 Loss, Margin Pressure</div>
 
             <div class="desc">Shares of Brainbees Solutions, the parent of omnichannel kidswear brand FirstCry, fell as much as 7% during the intraday trading&#8230;</div>
 
             <a href="https://inc42.com/buzz/firstcry-tumbles-7-on-q4-loss-margin-pressure/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">India’s Sovereign AI Reality Check</div>
 
             <div class="desc">India was quick to respond to Sam Altman when he underestimated the country’s ability to build something even remotely comparable&#8230;</div>
 
             <a href="https://inc42.com/features/indias-sovereign-ai-reality-check/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Byju Raveendran Sentenced To Six Months’ Jail By Singapore Court</div>
 
             <div class="desc">Troubled edtech startup BYJU’S founder Byju Raveendran has reportedly been sentenced to six months in jail by a Singapore court&#8230;</div>
 
             <a href="https://inc42.com/buzz/byju-raveendran-sentenced-to-six-months-jail-by-singapore-court-for-contempt/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">D2C In Repricing Mode, Aequs Bleeds In Q4 & More</div>
 
             <div class="desc">Indian D2C Brands Rethink Pricing, Margins The war in West Asia has triggered crude oil spikes, packaging shortages and squeezed&#8230;</div>
 
             <a href="https://inc42.com/buzz/d2c-in-repricing-mode-aequs-bleeds-in-q4-more/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-27"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Ex-CARS24 Exec Himanshu Ratnoo Joins EMotorad As Cofounder</div>
 
             <div class="desc">Mahendra Singh Dhoni-backed electric bicycle (ebike) startup EMotorad has roped in former CARS24 India CEO Himanshu Ratnoo as a cofounder.&#8230;</div>
 
             <a href="https://inc42.com/buzz/ex-cars24-exec-himanshu-ratnoo-joins-emotorad-as-cofounder/" target="_blank">Read →</a>
-
         </div>
         </div>
-    <div class="day">
+    <div class="day-section">
 
-        <div class="date">📅 2026-05-26</div>
+        <div class="date-header">📅 2026-05-26</div>
 
         <div class="summary-box">
             📰 <b>Daily Summary</b><br>
-            Total News: 21<br>
-            Categories: 2
+            
+Total news today: 30. The day was primarily driven by Retail / Business related developments.
+Key themes observed across the ecosystem include india’s, revenue, after, india, launch.
+Retail and digital commerce segments continued to show active movement across multiple platforms.
+Overall sentiment reflects ongoing structural activity in the Retail / Business space.
+Market attention remains concentrated on consolidated retail and startup ecosystem updates.
+
         </div>
     
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Aditya Birla Fashion Q4 net loss widens to Rs 163.8 cr</div>
 
             <div class="desc">Aditya Birla Fashion and Retail Ltd reported a wider net loss of Rs 163.81 crore for the March quarter of FY26. Revenue from operations increased by 15.74 percent to Rs 1,990.13 cr</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/aditya-birla-fashion-q4-net-loss-widens-to-rs-163-8-cr/131323469" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Threading Europe: India’s textile majors redraw strategy after tariff turbulence</div>
 
             <div class="desc">Indian textile and apparel companies are expanding their presence in Europe and the UK. Upcoming free trade agreements are expected to boost India&#039;s competitiveness against ri</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/apparel/threading-europe-indias-textile-majors-redraw-strategy-after-tariff-turbulence/131326064" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">India’s silver market faces purity crisis amid soaring investment demand</div>
 
             <div class="desc">Counterfeiters are flooding the Indian market with impure silver, exploiting rising prices and demand. Refiners are urging mandatory hallmarking and licensing for silver products t</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/apparel-fashion/jewellery/indias-silver-market-faces-purity-crisis-amid-soaring-investment-demand/131322131" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Experts flag data spills as house-help platforms bring physical AI home</div>
 
             <div class="desc">Recent data-gathering pilots by on-demand service platforms Pronto and Snabbit have drawn a spotlight on India’s emerging physical AI ecosystem – and put safety regulators on edge.</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/e-commerce/e-tailing/experts-flag-data-spills-as-house-help-platforms-bring-physical-ai-home/131321600" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Wilmar International chief says India must target 60% self-sufficiency in edible oils</div>
 
             <div class="desc">India needs to produce more edible oils domestically. Kuok Khoon Hong, chairman of Wilmar International, suggests aiming for 50-60% self-sufficiency. This move is crucial given Ind</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/food-entertainment/personal-care-pet-supplies-liquor/wilmar-international-chief-says-india-must-target-60-self-sufficiency-in-edible-oils/131321573" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Competition heats up in India’s smartphone manufacturing sector as PLI winds down</div>
 
             <div class="desc">India&#039;s Android smartphone manufacturing is heating up.  As a key government scheme concludes, companies are competing fiercely on price.  Brands are now spreading their order</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/consumer-durables-and-information-technology/mobiles/competition-heats-up-in-indias-smartphone-manufacturing-sector-as-pli-winds-down/131321639" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Elon Musk’s control over SpaceX expands with super voting shares, unusual governance rules: Report</div>
 
             <div class="desc">The company reportedly granted Musk a massive restricted stock package earlier this year while also structuring voting rights, &amp;nbsp;and shareholder protections in ways that go</div>
 
             <a href="https://www.livemint.com/companies/news/elon-musk-s-control-over-spacex-expands-with-super-voting-shares-and-unusual-governance-rules-report-cites-experts-11779817775464.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Tata Sons’ board discusses threadbare its new businesses, prodded by Noel Tata</div>
 
             <div class="desc">Tata Sons' board held its first detailed review of new businesses—aviation, batteries, electronics, and e-commerce—over a six-and-a-half-hour meeting, pushed by Tata Trusts chairma</div>
 
             <a href="https://www.livemint.com/companies/tata-sons-board-new-businesses-noel-tata-air-india-tata-trusts-11779806476125.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Govt aims to collect up to  ₹5,000 crore via Coal India share sale</div>
 
             <div class="desc">The floor price for the offer for sale (OFS), where existing shareholders or promoters divest stakes without issuing new shares, has been set at  ₹412 per share.</div>
 
             <a href="https://www.livemint.com/companies/govt-offers-up-to-2-per-cent-stake-sale-in-coal-india-under-ofs-route-11779808887415.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Who is Albert Manifold and why did BP remove him as chairman?</div>
 
             <div class="desc">The unexpected move marks the latest leadership upheaval at BP as the company struggles with boardroom controversies, strategic shifts and mounting shareholder pressure.</div>
 
             <a href="https://www.livemint.com/companies/news/who-is-albert-manifold-and-why-did-bp-remove-him-as-chairman-11779810822842.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Zee Entertainment in talks to land FIFA World Cup 2026 broadcast deal in India; to launch Unite8 Sports sports channel</div>
 
             <div class="desc">Zee Entertainment Enterprises Ltd. has officially confirmed it is in talks with FIFA to broadcast the 2026 World Cup in India. The FIFA World Cup 2026 starts on June 12 in the Unit</div>
 
             <a href="https://www.livemint.com/companies/news/zee-entertainment-in-talks-to-land-fifa-world-cup-2026-broadcast-deal-in-india-to-launch-unite8-sports-sports-channel-11779805822044.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Startups</div>
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">Delhi high court asks SpiceJet to disclose assets in 2 weeks in $8 million Sunbird dues case</div>
+
+            <div class="desc">Sunbird sought disclosure of SpiceJet’s assets so it could seek protective orders in case the airline failed to clear its dues.</div>
+
+            <a href="https://www.livemint.com/companies/news/delhi-high-court-spicejet-assets-sunbird-dues-case-lease-rentals-maintenance-dues-11779792013194.html" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
+
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">OpenAI's Sam Altman says artificial intelligence unlikely to lead to 'jobs apocalypse'</div>
+
+            <div class="desc">Altman said he and his executives had been roughly right on the technological predictions made by OpenAI when it launched ChatGPT in 2022. But he said they were pretty wrong on the</div>
+
+            <a href="https://www.livemint.com/companies/people/openais-sam-altman-says-artificial-intelligence-unlikely-to-lead-to-jobs-apocalypse-11779791265254.html" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
+
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">Fundamentum launches  ₹3,000-crore fund to fill deeptech's missing middle</div>
+
+            <div class="desc">The announcement comes at a time when investors in the country have become more bullish on both deeptech and AI, as both are maturing. With deeptech, investors are writing larger c</div>
+
+            <a href="https://www.livemint.com/companies/news/fundamentum-partnership-f2a-ai-deeptech-fund-nandan-nilekani-11779783863603.html" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
+
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">WestBridge, Creaegis to double down on Third Wave Coffee in $80-100 million round</div>
+
+            <div class="desc">Existing investors WestBridge Capital and Creaegis are set to deepen their stake as the café chain’s losses narrow and expansion accelerates.</div>
+
+            <a href="https://www.livemint.com/companies/start-ups/third-wave-coffee-100-million-funding-westbridge-creagis-valuation-india-cafe-chain-11779776368065.html" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
+
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">Land of the rising sunscreen: Move over K-beauty, Japanese skincare products are India’s next big obsession</div>
+
+            <div class="desc">Japanese beauty brands are gaining popularity in India, particularly among younger consumers, as they seek minimalist skincare and high-efficacy products.</div>
+
+            <a href="https://www.livemint.com/companies/news/land-of-the-rising-sunscreen-k-beauty-japanese-skincare-india-s-next-big-obsession-lighter-textures-natural-ingredients-11779768519598.html" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Startups">
+
+            <div class="meta">Startups</div>
 
             <div class="title">Inside Human Archive: The Y Combinator Startup Recording Indian Workers To Train The World’s Robots</div>
 
             <div class="desc">Human Archive is making waves in India’s startup ecosystem this week amid reports of its work with home services startups&#8230;</div>
 
             <a href="https://inc42.com/startups/inside-human-archive-the-startup-recording-indian-workers-to-train-the-worlds-robots/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Startups">
 
-            <div class="cat">Startups</div>
+            <div class="meta">Startups</div>
 
             <div class="title">The Personality Rights Battle: When Startup Founders Become Celebrities</div>
 
             <div class="desc">For most of India’s legal history, personality rights were concerns largely reserved for film stars and cricketers. Amitabh Bachchan went&#8230;</div>
 
             <a href="https://inc42.com/features/the-personality-rights-battle-when-startup-founders-become-celebrities/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Boba Bhai FY26 Revenue Jumps 1.5X YoY To ₹70 Cr</div>
 
             <div class="desc">Quick service restaurant (QSR) brand Boba Bhai saw its net revenue surge 145% to around ₹70 Cr in FY26 from&#8230;</div>
 
             <a href="https://inc42.com/buzz/boba-bhai-fy26-revenue-jumps-1-5x-yoy-to-%e2%82%b970-cr/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">slice Reports First Full-Year Profit, Posts ₹48.4 Cr PAT In FY26</div>
 
             <div class="desc">Fintech major slice reported its first full profitable fiscal year after converting into a small finance bank (SFB) in October&#8230;</div>
 
             <a href="https://inc42.com/buzz/slice-reports-first-full-year-profit-posts-%e2%82%b948-4-cr-pat-in-fy26/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Aequs Q4: Net Loss Swells To ₹54 Cr Despite 47% YoY Revenue Uptick</div>
 
             <div class="desc">Contract manufacturing company Aequs plunged into the red in the March quarter (Q4 FY26), reporting a net loss of ₹53.7&#8230;</div>
 
             <a href="https://inc42.com/buzz/aequs-q4-net-loss-swells-to-%e2%82%b954-cr-despite-47-yoy-revenue-uptick/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">FirstCry Q4: Loss Narrows 57% YoY to ₹48 Cr, Revenue Up 12%</div>
 
             <div class="desc">Omnichannel kidswear brand FirstCry managed to trim its Q4 FY26 net loss by 57% to ₹48.2 Cr from ₹111.5 Cr&#8230;</div>
 
             <a href="https://inc42.com/buzz/firstcry-q4-loss-narrows-57-yoy-to-%e2%82%b948-cr-revenue-up-12/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Pocket FM CFO Anurag Sharma Steps Down</div>
 
             <div class="desc">Anurag Sharma, the CFO of audio entertainment platform Pocket FM, has stepped down from his position to explore entrepreneurial opportunities.&#8230;</div>
 
             <a href="https://inc42.com/buzz/pocket-fm-cfo-anurag-sharma-steps-down/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Fundamentum Cofounder Ashish Kumar Launches ₹2,000 Cr AI & Deeptech VC Fund</div>
 
             <div class="desc">Fundamentum Partnership partner and cofounder Ashish Kumar has launched a new private investment platform, Fundamentum Frontier Advisors (F2A), to invest&#8230;</div>
 
             <a href="https://inc42.com/buzz/fundamentum-cofounder-ashish-kumar-launches-%e2%82%b92000-cr-ai-deeptech-vc-fund/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">The D2C Math Is Breaking: West Asia War Forces Brands Into Repricing Mode</div>
 
             <div class="desc">In the last few years, the world has adapted to new waves of uncertainty. From Covid to various economic slowdowns&#8230;</div>
 
             <a href="https://inc42.com/features/west-asia-war-forces-india-d2c-brands-into-repricing-mode/" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">MobiKwik Gets RBI’s In-Principle Nod For Offline Payment Aggregator Licence</div>
 
             <div class="desc">Listed fintech major MobiKwik has received the Reserve Bank of India’s (RBI) an in-principle approval to operate as a payment&#8230;</div>
 
             <a href="https://inc42.com/buzz/mobikwik-gets-rbis-in-principle-nod-for-offline-payment-aggregator-licence/" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
 
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">Awfis Zooms 19% After Q4 Profit More Than Doubles</div>
+
+            <div class="desc">Update &#124; May 26, 2026, 13:06 IST Shares of Awfis Space Solutions ended today’s trading session 0.6% lower at ₹357.6&#8230;</div>
+
+            <a href="https://inc42.com/buzz/awfis-zooms-19-after-q4-profit-more-than-doubles/" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
+
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">Pine Labs To Launch Infra For Stablecoin-Backed Prepaid Cards In Global Markets</div>
+
+            <div class="desc">Fintech major Pine Labs plans to soon launch infrastructure for stablecoin-backed prepaid cards in global markets. During the company’s Q4&#8230;</div>
+
+            <a href="https://inc42.com/buzz/pine-labs-to-launch-infra-for-stablecoin-backed-prepaid-cards-in-global-markets/" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
+
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">upGrad Appoints Ex-JioStar Executive Mukesh Mundra As CFO</div>
+
+            <div class="desc">Edtech unicorn upGrad has appointed Mukesh Mundra as its CFO ahead of its proposed acquisition of Unacademy. Mundra joins the&#8230;</div>
+
+            <a href="https://inc42.com/buzz/upgrad-appoints-ex-jiostar-executive-mukesh-mundra-as-cfo/" target="_blank">Read →</a>
+        </div>
+        
+        <div class="item"
+             data-date="2026-05-26"
+             data-category="Retail / Business">
+
+            <div class="meta">Retail / Business</div>
+
+            <div class="title">Beyond Instant: India’s Coffee Awakening</div>
+
+            <div class="desc">Every few years, the coffee market transitions towards a new trend or niche in the search of finding the next&#8230;</div>
+
+            <a href="https://inc42.com/features/beyond-instant-indias-coffee-awakening/" target="_blank">Read →</a>
         </div>
         </div>
-    <div class="day">
+    <div class="day-section">
 
-        <div class="date">📅 2026-05-25</div>
+        <div class="date-header">📅 2026-05-25</div>
 
         <div class="summary-box">
             📰 <b>Daily Summary</b><br>
-            Total News: 1<br>
-            Categories: 1
+            
+Total news today: 1. The day was primarily driven by Retail / Business related developments.
+Key themes observed across the ecosystem include conflict, india, profitability, crisil.
+Retail and digital commerce segments continued to show active movement across multiple platforms.
+Overall sentiment reflects ongoing structural activity in the Retail / Business space.
+Market attention remains concentrated on consolidated retail and startup ecosystem updates.
+
         </div>
     
-        <div class="item">
+        <div class="item"
+             data-date="2026-05-25"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">West Asia conflict may dent India Inc profitability by 200 bps: Crisil</div>
 
             <div class="desc">A prolonged West Asia conflict poses a risk to India Inc&#039;s profitability. Crisil Ratings predicts a significant drop in operating margins due to supply chain issues and rising</div>
 
             <a href="https://retail.economictimes.indiatimes.com/news/industry/west-asia-conflict-may-dent-india-inc-profitability-by-200-bps-crisil/131307164" target="_blank">Read →</a>
-
         </div>
         </div>
-    <div class="day">
+    <div class="day-section">
 
-        <div class="date">📅 2024-04-23</div>
+        <div class="date-header">📅 2024-04-23</div>
 
         <div class="summary-box">
             📰 <b>Daily Summary</b><br>
-            Total News: 13<br>
-            Categories: 1
+            
+Total news today: 13. The day was primarily driven by Retail / Business related developments.
+Key themes observed across the ecosystem include dividend, profit, india, icici, revenue.
+Retail and digital commerce segments continued to show active movement across multiple platforms.
+Overall sentiment reflects ongoing structural activity in the Retail / Business space.
+Market attention remains concentrated on consolidated retail and startup ecosystem updates.
+
         </div>
     
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">ICICI Prudential Life Insurance to focus on growing absolute VNB amid slump in FY24</div>
 
             <div class="desc"> In its Q4FY24 results, the company#39;s VNB fell 19.45 percent to Rs 2,227 crore for FY24</div>
 
             <a href="https://www.moneycontrol.com/news/business/icici-prudential-life-insurance-to-focusgrowing-absolute-vnb-amid-slumpfy24_17532041.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Tata Elxsi Q4 net profit, revenue decline QoQ; firm declares dividend of Rs 70 per share</div>
 
             <div class="desc"> The net profit was down 4.6 percent quarter-on-quarter compared to the October to December period of FY24 and 2.32 percent against the March quarter of FY23</div>
 
             <a href="https://www.moneycontrol.com/news/business/tata-elxsi-q4-net-profit-revenue-decline-qoq-firm-declares-dividendrs-70-per-share_17532061.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">ICICI Pru Life Q4 net profit falls 26% to Rs 174 cr, insurer announces dividend</div>
 
             <div class="desc"> Net premium income rose to Rs 14,788 crore</div>
 
             <a href="https://www.moneycontrol.com/news/business/icici-pru-life-q4-net-profit-falls-26-to-rs-174-cr-insurer-announces-dividend_17532101.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Cyient DLM#39;s profit after tax in FY24 surges 93%</div>
 
             <div class="desc"> For the full year, the company#39;s revenue stood at Rs 1,192 crore, which was 43.2 percent higher compared to the same period of the past financial year</div>
 
             <a href="https://www.moneycontrol.com/news/business/cyient-dlm39s-profit-after-taxfy24-surges-93_17532091.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Tata Consumer Q4 net profit falls 19% to Rs 217 cr, firm declares dividend of Rs 7.75 per share</div>
 
             <div class="desc"> Revenue increased 8.5 percent to Rs 3,927 crore in the three months ended March 31.</div>
 
             <a href="https://www.moneycontrol.com/news/business/tata-consumer-q4-net-profit-falls-19-to-rs-217-cr-firm-declares-dividendrs-775-per-share_17532071.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Hindustan Unilever Q4 Preview: Price cuts, slow demand, regional competition to hurt topline</div>
 
             <div class="desc"> The hike in royalty payments to parent Unilever are likely to adversely impact HUL#39;s EBITDA margins, say experts</div>
 
             <a href="https://www.moneycontrol.com/news/business/hindustan-unilever-q4-preview-price-cuts-slow-demand-regional-competition-to-hurt-topline_17531901.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">LTIMindtree Q4 Preview: Lower pass-through revenue seen impacting growth marginally</div>
 
             <div class="desc"> A compilation of estimates suggests the company#39;s Q4 FY24 net profit is projected to decline by 2.2 percent quarter on quarter to Rs 1,143.1 crore</div>
 
             <a href="https://www.moneycontrol.com/news/business/ltimindtree-q4-preview-lower-pass-through-revenue-seen-impacting-growth-marginally_17531881.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">LT manufactures hydrotreating reactor for refinery in Mexico</div>
 
             <div class="desc"> The reactor has been dispatched for Mexico from the company#39;s A M Naik Heavy Engineering Complex at Hazira in Gujarat.</div>
 
             <a href="https://www.moneycontrol.com/news/business/lt-manufactures-hydrotreating-reactor-for-refinerymexico_17531811.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Air India enters into codeshare pact with Japan#39;s All Nippon Airways</div>
 
             <div class="desc"> With the codeshare, effective for travel from May 23, Air India and All Nippon Airways passengers can fly to their desired destination by combining those flights between India and</div>
 
             <a href="https://www.moneycontrol.com/news/business/air-india-enters-into-codeshare-pactjapan39s-all-nippon-airways_17531801.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Razorpay announces #39;UPI Switch#39; in partnership with Airtel Payments Bank</div>
 
             <div class="desc"> Boosting success rates by 4-5 per cent, the solution is designed to handle up to 10,000 transactions per second (TPS) at any given time, according to a release.</div>
 
             <a href="https://www.moneycontrol.com/news/business/razorpay-announces-39upi-switch39partnershipairtel-payments-bank_17531791.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Stellantis India to hike vehicle prices by up to Rs 17,000 from April 30</div>
 
             <div class="desc"> This price increase will result in an increment ranging from Rs 4,000 to Rs 17,000 across the models, the company said in a statement.</div>
 
             <a href="https://www.moneycontrol.com/news/business/stellantis-india-to-hike-vehicle-prices-byto-rs-17000april-30_17531771.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">Juniper Green Energy, Tata Power sign PPA for 85 MW hybrid project in Maharashtra</div>
 
             <div class="desc"> "The project is the first wind-solar energy project for the company. It will utilize both wind and solar resources by combining 51 MW of wind energy and 34 MW of solar power," Jun</div>
 
             <a href="https://www.moneycontrol.com/news/business/juniper-green-energy-tata-power-sign-ppa-for-85-mw-hybrid-projectmaharashtra_17531681.html" target="_blank">Read →</a>
-
         </div>
         
-        <div class="item">
+        <div class="item"
+             data-date="2024-04-23"
+             data-category="Retail / Business">
 
-            <div class="cat">Retail / Business</div>
+            <div class="meta">Retail / Business</div>
 
             <div class="title">WeWork Global in talks to sell entire 27% stake in WeWork India</div>
 
             <div class="desc"> Bengaluru-based real estate firm Embassy Group, which holds the remaining 73 per cent stake in WeWork India, might also dilute some shareholdings to raise funds, they added.</div>
 
             <a href="https://www.moneycontrol.com/news/business/wework-globaltalks-to-sell-entire-27-stakewework-india_17531651.html" target="_blank">Read →</a>
+        </div>
+        </div>
+</div>
 
-        </div>
-        </div>
+<script>
+
+document.getElementById("search").addEventListener("input", filter);
+document.getElementById("category").addEventListener("change", filter);
+document.getElementById("fromDate").addEventListener("change", filter);
+document.getElementById("toDate").addEventListener("change", filter);
+
+function filter() {
+
+    let search = document.getElementById("search").value.toLowerCase();
+    let cat = document.getElementById("category").value;
+    let from = document.getElementById("fromDate").value;
+    let to = document.getElementById("toDate").value;
+
+    let items = document.querySelectorAll(".item");
+
+    items.forEach(i => {
+
+        let text = i.innerText.toLowerCase();
+        let category = i.dataset.category;
+        let date = i.dataset.date;
+
+        let ok =
+            (text.includes(search)) &&
+            (cat === "" || category === cat) &&
+            (!from || date >= from) &&
+            (!to || date <= to);
+
+        i.style.display = ok ? "block" : "none";
+    });
+}
+
+</script>
 
 </body>
 </html>
