@@ -1,5 +1,10 @@
 import feedparser
+import requests
+
+from bs4 import BeautifulSoup
+
 from datetime import datetime, timezone, timedelta
+
 import re
 from collections import defaultdict
 import os
