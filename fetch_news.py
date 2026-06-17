@@ -38,6 +38,11 @@ feeds = [
     # Commerce
     "https://www.pymnts.com/feed/",
 
+    # Indian Retailer
+    "https://www.indianretailer.com/rss/retail-business",
+    "https://www.indianretailer.com/rss/technology-ecommerce",
+    "https://www.indianretailer.com/rss/ir-just-in",
+
     # Technology
     "https://techcrunch.com/feed/"
 ]
