@@ -9,12 +9,36 @@ import json
 # RSS SOURCES
 # =========================================================
 feeds = [
+
+    # Indian Retail
     "https://retail.economictimes.indiatimes.com/rss/topstories",
+    "https://indiaretailing.com/feed",
+
+    # Business
     "https://www.livemint.com/rss/companies",
     "https://www.business-standard.com/rss/latest.rss",
     "https://www.moneycontrol.com/rss/business.xml",
+
+    # Startup
     "https://inc42.com/feed/",
-    "https://entrackr.com/feed/"
+    "https://entrackr.com/feed/",
+    "https://yourstory.com/feed",
+
+    # Global Retail
+    "https://www.retaildive.com/feeds/news/",
+    "https://www.retailbrew.com/feed/",
+
+    # Retail Tech
+    "https://www.retailtouchpoints.com/rss.xml",
+
+    # Grocery
+    "https://progressivegrocer.com/rss.xml",
+
+    # Commerce
+    "https://www.pymnts.com/feed/",
+
+    # Technology
+    "https://techcrunch.com/feed/"
 ]
 
 # =========================================================
@@ -91,23 +115,23 @@ all_news = []
 
 for url in feeds:
 
+    print("=" * 80)
+    print("Checking Feed:")
+    print(url)
+
     feed = feedparser.parse(url)
 
-    # MORE NEWS
+    print(f"Articles Found : {len(feed.entries)}")
+
+    # Skip broken feeds
+    if len(feed.entries) == 0:
+        print("❌ Feed returned 0 articles")
+        continue
+
+    print("✅ Feed Working")
+
     for e in feed.entries[:50]:
-
-        summary = re.sub("<.*?>", "", e.get("summary", ""))
-
-        all_news.append({
-
-            "title": e.title,
-            "link": e.link,
-            "summary": summary[:220],
-            "date": clean_date(e.get("published", "")),
-            "category": get_category(e.title)
-
-        })
-
+        
 # =========================================================
 # DEDUP
 # =========================================================
