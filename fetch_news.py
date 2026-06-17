@@ -214,6 +214,21 @@ for url in feeds:
             "category": get_category(e.title)
 
         })
+        
+# =========================================================
+# ADD INDIAN RETAILER
+# =========================================================
+
+print("=" * 80)
+print("Fetching Indian Retailer...")
+
+indian_retailer_news = scrape_indian_retailer()
+
+all_news.extend(indian_retailer_news)
+
+print(f"Indian Retailer Articles: {len(indian_retailer_news)}")
+print("=" * 80)
+
 # =========================================================
 # DEDUP
 # =========================================================
