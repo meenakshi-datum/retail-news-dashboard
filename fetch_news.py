@@ -8,37 +8,14 @@ import json
 # =========================================================
 # RSS SOURCES
 # =========================================================
+
 feeds = [
-
-    # Indian Retail
     "https://retail.economictimes.indiatimes.com/rss/topstories",
-    "https://indiaretailing.com/feed",
-
-    # Business
     "https://www.livemint.com/rss/companies",
     "https://www.business-standard.com/rss/latest.rss",
     "https://www.moneycontrol.com/rss/business.xml",
-
-    # Startup
     "https://inc42.com/feed/",
-    "https://entrackr.com/feed/",
-    "https://yourstory.com/feed",
-
-    # Global Retail
-    "https://www.retaildive.com/feeds/news/",
-    "https://www.retailbrew.com/feed/",
-
-    # Retail Tech
-    "https://www.retailtouchpoints.com/rss.xml",
-
-    # Grocery
-    "https://progressivegrocer.com/rss.xml",
-
-    # Commerce
-    "https://www.pymnts.com/feed/",
-
-    # Technology
-    "https://techcrunch.com/feed/"
+    "https://entrackr.com/feed/"
 ]
 
 # =========================================================
@@ -111,25 +88,14 @@ def clean_date(date_str):
 # =========================================================
 # FETCH NEWS
 # =========================================================
+
 all_news = []
 
 for url in feeds:
 
-    print("=" * 80)
-    print("Checking Feed:")
-    print(url)
-
     feed = feedparser.parse(url)
 
-    print(f"Articles Found : {len(feed.entries)}")
-
-    # Skip broken feeds
-    if len(feed.entries) == 0:
-        print("❌ Feed returned 0 articles")
-        continue
-
-    print("✅ Feed Working")
-
+    # MORE NEWS
     for e in feed.entries[:50]:
         
 # =========================================================
