@@ -118,7 +118,68 @@ def clean_date(date_str):
 
         except:
             return today
+# =========================================================
+# INDIAN RETAILER SCRAPER
+# =========================================================
 
+def scrape_indian_retailer():
+
+    news = []
+
+    url = "https://www.indianretailer.com/news"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    try:
+
+        response = requests.get(
+            url,
+            headers=headers,
+            timeout=20
+        )
+
+        soup = BeautifulSoup(response.text, "lxml")
+
+        seen = set()
+
+        for article in soup.find_all("a", href=True):
+
+            title = article.get_text(" ", strip=True)
+            link = article["href"]
+
+            if len(title) < 25:
+                continue
+
+            if "/news/" not in link:
+                continue
+
+            if link.startswith("/"):
+                link = "https://www.indianretailer.com" + link
+
+            if link in seen:
+                continue
+
+            seen.add(link)
+
+            news.append({
+
+                "title": title,
+                "link": link,
+                "summary": "",
+                "date": today,
+                "category": get_category(title)
+
+            })
+
+        print(f"Indian Retailer: {len(news)} articles")
+
+    except Exception as e:
+
+        print("Indian Retailer Error:", e)
+
+    return news
 # =========================================================
 # FETCH NEWS
 # =========================================================
